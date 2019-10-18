@@ -65,9 +65,19 @@ $('.news-carousel-button next').append($('<span class="lnr lnr-chevron-right"></
 }
 //////////////////////////////Weather Ajax /////////////////////////
 const weatherAjaxCall = () => {
+
+  $('.container').append($('<input type="text" placeholder="ZipCode Please!!"/>'));
+
+$('.container').append($('<button type="button">SUBMIT</button>'))
+event.preventDefault();
+
+$('button').on('click',() => {
+let  userInput = $('input[type="text"]').val();
+(userInput>=0) ? userInput= $('input[type="text"]').val(): userInput='94087';
   $.ajax({
-      url: "http://api.openweathermap.org/data/2.5/weather?zip=94087&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3"
+      url: `http://api.openweathermap.org/data/2.5/weather?zip=${userInput}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
     }).then((data) => {
+////converting to fahreinheit funtcion
       const convertToFahrenheit = (num) => {
         num =parseFloat((num-273.15) * (9/5) + 32).toFixed(1);
   return num;
@@ -82,7 +92,12 @@ const weatherAjaxCall = () => {
     }, (error) => {
       console.log(error);
     })
+
+})
+
 }
+//////////////////////////ToDo List//////////////////////////////////
+
 
 
 $(() => {
@@ -92,9 +107,6 @@ $(() => {
   //api.openweathermap.org/data/2.5/weather?zip={zip code}
   //news key: c9b28a91c2114ad2bb5aed577298b412
 
-
-  ////weather api giving out the weather information
-  //
 
 $('#news').on('click',newsAjaxCall)
 $('#weather').on('click',weatherAjaxCall)
