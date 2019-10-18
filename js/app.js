@@ -63,6 +63,26 @@ $('.news-carousel-button next').append($('<span class="lnr lnr-chevron-right"></
 
   })
 }
+//////////////////////////////Weather Ajax /////////////////////////
+const weatherAjaxCall = () => {
+  $.ajax({
+      url: "http://api.openweathermap.org/data/2.5/weather?zip=94087&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3"
+    }).then((data) => {
+      const convertToFahrenheit = (num) => {
+        num =parseFloat((num-273.15) * (9/5) + 32).toFixed(1);
+  return num;
+      }
+
+      $('.container').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp)));
+      $('.container').append($('<p>').text("Pressure : " + data.main.pressure));
+      $('.container').append($('<p>').text("Humidity : " + data.main.humidity));
+      $('.container').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min)));
+      $('.container').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max)));
+      //console.log(data.main.temp);
+    }, (error) => {
+      console.log(error);
+    })
+}
 
 
 $(() => {
@@ -74,25 +94,9 @@ $(() => {
 
 
   ////weather api giving out the weather information
-  //   $.ajax({
-  //     url: "http://api.openweathermap.org/data/2.5/weather?zip=94087&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3"
-  //   }).then((data) => {
-  //     const convertToFahrenheit = (num) => {
-  //       num =parseFloat((num-273.15) * (9/5) + 32).toFixed(1);
-  // return num;
-  //     }
   //
-  //     $('.container').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp)));
-  //     $('.container').append($('<p>').text("Pressure : " + data.main.pressure));
-  //     $('.container').append($('<p>').text("Humidity : " + data.main.humidity));
-  //     $('.container').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min)));
-  //     $('.container').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max)));
-  //     //console.log(data.main.temp);
-  //   }, (error) => {
-  //     console.log(error);
-  //   })
 
 $('#news').on('click',newsAjaxCall)
-
+$('#weather').on('click',weatherAjaxCall)
 
 })
