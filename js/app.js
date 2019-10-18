@@ -29,8 +29,42 @@ $(() => {
     url: "https://newsapi.org/v2/top-headlines?country=us&apiKey=c9b28a91c2114ad2bb5aed577298b412"
   }).then((data) => {
     for (x of data.articles) {
-      $('.content').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
+      $('.news-carousel-images').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
+      $('.news-carousel-images').append($('<p>').text(x.title).addClass('description'));
     } //end of for loop
+
+    //////////////writing the carousel logic///////////////
+    let currentImgIndex = 0;
+    let highestIndex = $('.news-carousel-images').children().length - 1;
+
+    $('.next').on('click', () => {
+
+      /////first moving to the next element/////////
+      //hiding the first image//////
+      $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'none');
+      ////hiding the description of the first image
+      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'none');
+      //moving the index to the next image and check for last image & loop
+      (currentImgIndex < highestIndex) ? currentImgIndex +=2 : currentImgIndex = 0;
+
+      //bringing up the next image and description//
+      $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
+      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'block');
+    });
+
+/////first moving to the previous element/////////
+    //hiding current element
+    $('.previous').on('click', () => {
+      $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'none');
+      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'none');
+      //moving the index to the previous image and check for first img & loop
+      (currentImgIndex > 0)? currentImgIndex -= 2: currentImgIndex = highestIndex;
+      //bringing up the previous image and description//
+      $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
+      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'block');
+    })
+
+
   }, (error) => {
 
   })
