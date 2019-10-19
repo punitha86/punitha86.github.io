@@ -5,7 +5,9 @@
 }
 
 header>img {
-  heigth: 200px;
+  height:40%
+  width:100%
+  text-align: center;
 }
 
 .description {
