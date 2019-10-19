@@ -70,10 +70,11 @@ const weatherAjaxCall = () => {
 
 $('.container').append($('<button type="button">SUBMIT</button>'))
 event.preventDefault();
-
+$('.container').append($('<div>').addClass('weathercontent'))
 $('button').on('click',() => {
+
 let  userInput = $('input[type="text"]').val();
-(userInput>=0) ? userInput= $('input[type="text"]').val(): userInput='94087';
+(userInput!="") ? userInput= $('input[type="text"]').val(): userInput='94087';
   $.ajax({
       url: `http://api.openweathermap.org/data/2.5/weather?zip=${userInput}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
     }).then((data) => {
@@ -82,12 +83,12 @@ let  userInput = $('input[type="text"]').val();
         num =parseFloat((num-273.15) * (9/5) + 32).toFixed(1);
   return num;
       }
-
-      $('.container').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp)));
-      $('.container').append($('<p>').text("Pressure : " + data.main.pressure));
-      $('.container').append($('<p>').text("Humidity : " + data.main.humidity));
-      $('.container').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min)));
-      $('.container').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max)));
+      $('.weathercontent').empty();
+      $('.weathercontent').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp)));
+      $('.weathercontent').append($('<p>').text("Pressure : " + data.main.pressure));
+      $('.weathercontent').append($('<p>').text("Humidity : " + data.main.humidity));
+      $('.weathercontent').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min)));
+      $('.weathercontent').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max)));
       //console.log(data.main.temp);
     }, (error) => {
       console.log(error);
@@ -99,6 +100,13 @@ let  userInput = $('input[type="text"]').val();
 //////////////////////////ToDo List//////////////////////////////////
 
 
+///////////////////////////Games////////////////////////////////////////
+
+const gameFunction = () => {
+  $('.container').append($('<h2>').text("SMILEY GAME"));
+  $('.container').append($('<p>').text("Please click on the extra smiley face on the left"));
+  
+}
 
 $(() => {
   //console.log("App.js successfully connected");
@@ -110,5 +118,6 @@ $(() => {
 
 $('#news').on('click',newsAjaxCall)
 $('#weather').on('click',weatherAjaxCall)
+$('#games').on('click',gameFunction)
 
 })
