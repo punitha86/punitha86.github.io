@@ -102,23 +102,56 @@ const weatherAjaxCall = () => {
 //https://www.emoji.co.uk/files/phantom-open-emojis/animals-nature-phantom/12490-jack-o-lantern.png
 const gameFunction = () => {
 
+  const removeChildren = () => {
+      $('#leftid').children().remove();
+      $('#rightid').children().remove();
+  }
+/////////////////////initial set up field for the smileys
   $('.container').append($('<h2>').text("SMILEY GAME"));
   $('.container').append($('<p>').text("Please click on the extra smiley face on the left"));
   $('.container').append($('<div>').addClass('gameContainer'));
-  $('.gameContainer').append($('<div>').addClass("leftsideGamediv").attr('id', 'leftid'));
-  $('.gameContainer').append($('<div>').addClass("rightsideGamediv").attr('id', 'rightid'));
+  $('.gameContainer').append($('<div>').addClass('leftsideGamediv').attr('id', 'leftid'));
+  $('.gameContainer').append($('<div>').addClass('rightsideGamediv').attr('id', 'rightid'));
   ///increasing the number of faces by 5 for each success
   let noOfFaces = 5;
-  for (let i = 0; i < noOfFaces; i++) {
-    let randomTopAttribute = Math.floor(Math.random() * 20 )+ 70;
-    let randomLeftAttribute = Math.floor((Math.random() * 43)+2);
-    $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top',randomTopAttribute+"%").css('left',randomLeftAttribute+"%"));
-    $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top',randomTopAttribute+"%").css('left',(randomLeftAttribute+50)+"%"));
+  ////generarte the faces//////////////
+  const generateFaces =() => {
+    for (let i = 0; i < noOfFaces; i++) {
+      let randomTopAttribute = Math.floor(Math.random() * 20 )+ 70;
+      let randomLeftAttribute = Math.floor((Math.random() * 43)+2);
+      $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top',randomTopAttribute+"%").css('left',randomLeftAttribute+"%"));
+      $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top',randomTopAttribute+"%").css('left',(randomLeftAttribute+50)+"%"));
+    }//end of for loop
+  $('#rightid').children().last().remove();
+  $('#leftid').children().last().attr('id','difference');
+  /////need to write logic for the click of teh right image
+
+  $('#difference').on('click',(event) => {
+    event.stopPropagation();
+    console.log("won");
+    removeChildren();
+    noOfFaces+=5;
+    generateFaces();
+  });
   }
-$('#rightid').children().last().remove();
-/////need to write logic for the click of teh right image
 
+////////////////////////////////////////////Fail case/////////////////////////
 
+$('body').on('click',(event)=>{
+  let playAgain = confirm("Game Over! Restart Game?");
+                if (playAgain === true) {
+                    removeChildren();
+                    numberOfFaces = 5;
+                    //console.log(numberOfFaces);
+                    generateFaces();
+                }
+                else{
+                ('body').prop('onclick',null).off('click') ;
+                ('#difference').prop('onclick',null).off('click');
+                }
+
+});
+generateFaces();
 
 }
 
