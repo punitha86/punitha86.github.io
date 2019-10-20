@@ -124,7 +124,11 @@ console.log("inside render");
   // console.log('list',list);
   $('li').on('click', (event) => {
     $(event.target).css('text-decoration', 'line-through');
-    
+    $(event.target).append($('<button id="remove-btn">REMOVE</button>'));
+    $('#remove-btn').on('click',(event1) => {
+      $(event1.target).parent().remove();
+    })
+
   });
 }
 
@@ -133,18 +137,10 @@ $('form').on('submit', (event) => {
   list.push(inputValue)
   //console.log( inputValue );
   event.preventDefault();
-  //$(event.currentTarget).trigger('reset');
+  $(event.currentTarget).trigger('reset');
   render();
 });
 
-// <ul>
-//
-// </ul>
-// <form>
-// <input type="text" id="input-box"/>
-// <input type="submit" id="submit-btn"/>
-// <input type="reset" />
-// </form>
 
 }
 
