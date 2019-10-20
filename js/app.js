@@ -107,8 +107,8 @@ const weatherAjaxCall = () => {
 //////////////////////////ToDo List//////////////////////////////////
 //******************************************************************//
 const todoFunction = () => {
-    let list = [];
-
+  let list = [];
+let counter = 0;
 
 
   ///variable to store the todo list
@@ -127,25 +127,39 @@ const todoFunction = () => {
 
   const render = () => {
     console.log("inside render");
-    $('#listitem').append('<li>' + list[list.length - 1] + '</li>');
+    ///counter value to check if its the first render of the page;
+
+    let itemList = localStorage.getItem('listitem').split(',');
+    console.log(itemList);
+    if (counter === 0) {
+      for (i = 0; i < itemList.length; i++) {
+        $('#listitem').append('<li>' + itemList[i] + '</li>');
+      }
+    } else {
+      $('#listitem').append('<li>' + itemList[itemList.length - 1] + '</li>');
+    }
+
+
+    //localStorage.getItem('listitem'));
+    //'<li>' + list[list.length - 1] + '</li>');
     $('li').on('click', (event) => {
-      $(event.target).css('text-decoration', 'line-through');
+      $(event.currentTarget).css('text-decoration', 'line-through');
       $(event.target).append($('<button id="remove-btn">REMOVE</button>'));
       $('#remove-btn').on('click', (event1) => {
         $(event1.target).parent().remove();
       })
     });
   }
-////if teh weather is cold we are adding msg to get the jacket
+  ////if teh weather is cold we are adding msg to get the jacket
   $.ajax({
     url: `http://api.openweathermap.org/data/2.5/weather?zip=94087&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
   }).then((data) => {
     ////converting to fahreinheit funtcion
     const convertToFahrenheit = (num) => {
-      num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
-      return num;
-    }
-    (convertToFahrenheit(data.main.temp_min)<60.0)?list.push('better pack ur jacket weather is cold today'):list.push('Pack ur hat');
+        num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
+        return num;
+      }
+      (convertToFahrenheit(data.main.temp_min) < 60.0) ? list.push('better pack ur jacket weather is cold today') : list.push('Pack ur hat');
     render();
     //console.log(data.main.temp);
   }, (error) => {
@@ -155,7 +169,9 @@ const todoFunction = () => {
 
   $('form').on('submit', (event) => {
     const inputValue = $('#input-box').val();
-    list.push(inputValue)
+    list.push(inputValue);
+    counter++;
+    localStorage.setItem('listitem', list);
     event.preventDefault();
     $(event.currentTarget).trigger('reset');
     render();
