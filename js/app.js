@@ -1,3 +1,7 @@
+//******************************************************************//
+//////////////////////////////News Ajax /////////////////////////
+//******************************************************************//
+
 const newsAjaxCall = () => {
   //creating container for teh news articles
   // <div class="container">
@@ -59,10 +63,13 @@ console.log(highestIndex,currentImgIndex);
 
 
   }, (error) => {
-
+console.log(error);
   })
 }
+//******************************************************************//
 //////////////////////////////Weather Ajax /////////////////////////
+//******************************************************************//
+
 const weatherAjaxCall = () => {
   $('.container').empty();
   $('.container').append($('<input type="text" placeholder="ZipCode Please!!"/>'));
@@ -93,13 +100,58 @@ const weatherAjaxCall = () => {
       console.log(error);
     })
 
-  })
+  });
 
 }
+//******************************************************************//
 //////////////////////////ToDo List//////////////////////////////////
+//******************************************************************//
+const todoFunction =() => {
+///variable to store the todo list
+let list = [];
+$('.container').empty();
+//adding a form to the body
+$('.container').append($('<div>').addClass('todoContent'));
+let appendingTodoString='<form><input type="text" id="input-box"/>';
+appendingTodoString += '<input type="submit" id="submit-btn"/>';
+appendingTodoString += '<input type="reset" /> </form>';
+$('.todoContent').append($(appendingTodoString));
+$('.todoContent').append($('<ul>').attr('id','listitem'));
 
+const render = () => {
+console.log("inside render");
+  $('#listitem').append('<li>' + list[list.length - 1] + '</li>');
+  // console.log('list',list);
+  $('li').on('click', (event) => {
+    $(event.target).css('text-decoration', 'line-through');
+    
+  });
+}
 
+$('form').on('submit', (event) => {
+  const inputValue = $('#input-box').val();
+  list.push(inputValue)
+  //console.log( inputValue );
+  event.preventDefault();
+  //$(event.currentTarget).trigger('reset');
+  render();
+});
+
+// <ul>
+//
+// </ul>
+// <form>
+// <input type="text" id="input-box"/>
+// <input type="submit" id="submit-btn"/>
+// <input type="reset" />
+// </form>
+
+}
+
+//******************************************************************//
 ///////////////////////////Games////////////////////////////////////////
+//******************************************************************//
+
 //https://www.emoji.co.uk/files/phantom-open-emojis/animals-nature-phantom/12490-jack-o-lantern.png
 const gameFunction = () => {
 $('.container').empty();
@@ -151,6 +203,7 @@ $('.container').empty();
   //   }
   //
   // });
+  generateFaces();
 }
 
 $(() => {
@@ -164,6 +217,6 @@ $(() => {
   $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
   $('#games').on('click', gameFunction)
-  //gameFunction();
+  $('#todo').on('click',todoFunction)
 
 })
