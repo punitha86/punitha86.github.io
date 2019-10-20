@@ -14,46 +14,47 @@ const newsAjaxCall = () => {
   $.ajax({
     url: "https://newsapi.org/v2/top-headlines?country=us&apiKey=c9b28a91c2114ad2bb5aed577298b412"
   }).then((data) => {
+    //$('.news-carousel-images').append($('<div>').addClass('newsDiv'))
+    //$('.news-carousel-images').append(('<div class="newsDiv">'));
     for (x of data.articles) {
-      $('.news-carousel-images').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
-      $('.news-carousel-images').append($('<p>').text(x.title));
-      $('.news-carousel-images').append($('<article>').text(x.description).addClass('description'));
+  let appendingString= `<div class="newsDiv">`;
+  appendingString +=`<img src=${x.urlToImage} class='newsimg' style="width:100%;height=100%">`;
+  appendingString +=`<p class='newsPara'> ${x.title}</p>` ;
+  appendingString +=`<article class='description'> ${x.description} </article></div>`;
+    //  $('.newsDiv').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
+    //  $('.newsDiv ').append($('<p>').text(x.title).addClass('newsPara'));
+    //  $('.newsDiv').append($('<p>').text(x.description).hide());
+$('.news-carousel-images').append(appendingString);
+$('.description').hide();
     } //end of for loop
-    ////on click of the images we need to give out its conetent
-    // $('.newsimg').on('click',() => {
-    //   $(event.target).siblings('.description').eq(0).css('display','block');
-    //   //$('.content').append('<p>'+x.description+'</p>');
-    // })
+    //on click of the images we need to give out its conetent
+    $('.newsDiv').on('click',() => {
+      console.log($(event.currentTarget).children().eq(2));
+      $(event.currentTarget).children().eq(2).css('display','block');
+      //$('.content').append('<p>'+x.description+'</p>');
+    })
 
     //////////////writing the carousel logic///////////////
     let currentImgIndex = 0;
     let highestIndex = $('.news-carousel-images').children().length - 1;
-
+console.log(highestIndex,currentImgIndex);
     $('.next').on('click', () => {
-
-      /////first moving to the next element/////////
+      ///first moving to the next element/////////
       //hiding the first image//////
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'none');
-      ////hiding the description of the first image
-      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'none');
-      //moving the index to the next image and check for last image & loop
-      (currentImgIndex < highestIndex) ? currentImgIndex += 3: currentImgIndex = 0;
-
+    //  moving the index to the next image and check for last image & loop
+      (currentImgIndex < highestIndex) ? currentImgIndex += 1: currentImgIndex = 0;
       //bringing up the next image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
-      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'block');
     });
-
-    /////first moving to the previous element/////////
+    /////moving to the previous element/////////
     //hiding current element
     $('.previous').on('click', () => {
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'none');
-      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'none');
       //moving the index to the previous image and check for first img & loop
-      (currentImgIndex > 0) ? currentImgIndex -= 3: currentImgIndex = highestIndex;
+      (currentImgIndex > 0) ? currentImgIndex -= 1: currentImgIndex = highestIndex;
       //bringing up the previous image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
-      $('.news-carousel-images').children().eq(currentImgIndex + 1).css('display', 'block');
     })
 
 
@@ -137,19 +138,19 @@ $('.container').empty();
 
   //////////////////////////////////////////Fail case/////////////////////////
 
-  $('body').on('click', (event) => {
-    let playAgain = confirm("Game Over! Restart Game?");
-    if (playAgain === true) {
-      removeChildren();
-      numberOfFaces = 5;
-      //console.log(numberOfFaces);
-      generateFaces();
-    } else {
-      ('body').prop('onclick', null).off('click');
-      ('#difference').prop('onclick', null).off('click');
-    }
-
-  });
+  // $('body').on('click', (event) => {
+  //   let playAgain = confirm("Game Over! Restart Game?");
+  //   if (playAgain === true) {
+  //     removeChildren();
+  //     numberOfFaces = 5;
+  //     //console.log(numberOfFaces);
+  //     generateFaces();
+  //   } else {
+  //     ('body').prop('onclick', null).off('click');
+  //     ('#difference').prop('onclick', null).off('click');
+  //   }
+  //
+  // });
 }
 
 $(() => {
