@@ -1,4 +1,20 @@
 //******************************************************************//
+///////////////////////////HomePage////////////////////////////////////////
+//******************************************************************//
+
+const homepageFunction = () => {
+
+  $('.container').empty();
+  $('.container').append($('<p>').text('Everyone has a ritual that helps set the tone for the day ahead. Knowing exactly how the first few minutes of your day will look is a tool we can implement that will leave us feeling empowered as we face the rest of our day. It’s important to cultivate this sacred time for yourself and begin each day with intention.'));
+    $('.container').append($('<p>').text('Designing a morning that aligns with what feels right for you is imperative, so be sure to create a space that resonates with you rather than simply following a routine that works for someone else. Remember, what works for one person may not work for you, and that’s okay. Some people have extremely detailed mornings and others simply take five minutes to express gratitude for the life they have been given. Whatever you choose is perfect for you and will create a snowball effect of intention and self-honoring choices the rest of your day.'));
+  $('.container').append($('<p>').text('Looking to begin a morning ritual but still need a little inspiration? Here are some examples of morning rituals to help you get started.'));
+  $('.container').append($('<p>').text('Barack Obama, President Taking care of physical fitness and family are two important elements of President Obama\’s daily ritual. He starts his day with a workout at 6:45 a.m., reads several newspapers, has breakfast with his family, and then starts his work day just before 9:00 a.m. in the morning. He may work as late as 10:00 p.m. some evenings, but always stops to have dinner with his family each day.'));
+  $('.container').append($('<p>').text('Benjamin Franklin, a founding father of the United States. Franklin\’s much-lauded to-do list included some specific rules for how he started each morning. His three-hour block of morning routine stretched from 5:00 a.m. to 7:00 a.m. and included addressing “Powerful Goodness” and setting a plan for the rest of his day.Every morning Franklin asked himself, “What good shall I do today?”'));
+}
+
+
+
+//******************************************************************//
 //////////////////////////////News Ajax /////////////////////////
 //******************************************************************//
 
@@ -138,7 +154,7 @@ const todoFunction = () => {
 
   ////if teh weather is cold we are adding msg to get the jacket
   $.ajax({
-    url: `http://api.openweathermap.org/data/2.5/weather?zip=94087&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
+    url: `http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.zip}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
   }).then((data) => {
     ////converting to fahreinheit funtcion
     const convertToFahrenheit = (num) => {
@@ -248,7 +264,7 @@ const gameFunction = () => {
   ////generarte the faces//////////////
   const generateFaces = () => {
     for (let i = 0; i < noOfFaces; i++) {
-      let randomTopAttribute = Math.floor(Math.random() * 50) + 30;
+      let randomTopAttribute = Math.floor(Math.random() * 100) + 40;
       let randomLeftAttribute = Math.floor((Math.random() * 43) + 2);
       $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', randomLeftAttribute + "%"));
       $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', (randomLeftAttribute + 50) + "%"));
@@ -285,16 +301,30 @@ const gameFunction = () => {
 }
 
 $(() => {
-  //console.log("App.js successfully connected");
-  //Calling weather api to check for its values
-  //c4a833b10b9fb7fdc0ba57f9b6a5e4a3
-  //api.openweathermap.org/data/2.5/weather?zip={zip code}
-  //news key: c9b28a91c2114ad2bb5aed577298b412
-
-
+  let $navbar= $('#myTopnav');
+  let sticky =$navbar.offset().top;
+$(window).scroll(() => {
+  if ($(window).scrollTop() >= sticky) {
+    console.log("inside window");
+    $navbar.addClass("sticky")
+  } else {
+    $navbar.removeClass("sticky");
+  }
+})
+homepageFunction();
   $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
   $('#games').on('click', gameFunction)
   $('#todo').on('click', todoFunction)
+  $('#home').on('click', homepageFunction)
 
 })
+
+//////////welcome to the graveyard
+
+
+//console.log("App.js successfully connected");
+//Calling weather api to check for its values
+//c4a833b10b9fb7fdc0ba57f9b6a5e4a3
+//api.openweathermap.org/data/2.5/weather?zip={zip code}
+//news key: c9b28a91c2114ad2bb5aed577298b412
