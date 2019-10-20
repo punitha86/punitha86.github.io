@@ -21,32 +21,32 @@ const newsAjaxCall = () => {
     //$('.news-carousel-images').append($('<div>').addClass('newsDiv'))
     //$('.news-carousel-images').append(('<div class="newsDiv">'));
     for (x of data.articles) {
-  let appendingString= `<div class="newsDiv">`;
-  appendingString +=`<img src=${x.urlToImage} class='newsimg' style="width:100%;height=100%">`;
-  appendingString +=`<p class='newsPara'> ${x.title}</p>` ;
-  appendingString +=`<article class='description'> ${x.description} </article></div>`;
-    //  $('.newsDiv').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
-    //  $('.newsDiv ').append($('<p>').text(x.title).addClass('newsPara'));
-    //  $('.newsDiv').append($('<p>').text(x.description).hide());
-$('.news-carousel-images').append(appendingString);
-$('.description').hide();
+      let appendingString = `<div class="newsDiv">`;
+      appendingString += `<img src=${x.urlToImage} class='newsimg' style="width:100%;height=100%">`;
+      appendingString += `<p class='newsPara'> ${x.title}</p>`;
+      appendingString += `<article class='description'> ${x.description} </article></div>`;
+      //  $('.newsDiv').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
+      //  $('.newsDiv ').append($('<p>').text(x.title).addClass('newsPara'));
+      //  $('.newsDiv').append($('<p>').text(x.description).hide());
+      $('.news-carousel-images').append(appendingString);
+      $('.description').hide();
     } //end of for loop
     //on click of the images we need to give out its conetent
-    $('.newsDiv').on('click',() => {
+    $('.newsDiv').on('click', () => {
       console.log($(event.currentTarget).children().eq(2));
-      $(event.currentTarget).children().eq(2).css('display','block');
+      $(event.currentTarget).children().eq(2).css('display', 'block');
       //$('.content').append('<p>'+x.description+'</p>');
     })
 
     //////////////writing the carousel logic///////////////
     let currentImgIndex = 0;
     let highestIndex = $('.news-carousel-images').children().length - 1;
-console.log(highestIndex,currentImgIndex);
+    console.log(highestIndex, currentImgIndex);
     $('.next').on('click', () => {
       ///first moving to the next element/////////
       //hiding the first image//////
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'none');
-    //  moving the index to the next image and check for last image & loop
+      //  moving the index to the next image and check for last image & loop
       (currentImgIndex < highestIndex) ? currentImgIndex += 1: currentImgIndex = 0;
       //bringing up the next image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
@@ -63,7 +63,7 @@ console.log(highestIndex,currentImgIndex);
 
 
   }, (error) => {
-console.log(error);
+    console.log(error);
   })
 }
 //******************************************************************//
@@ -106,40 +106,60 @@ const weatherAjaxCall = () => {
 //******************************************************************//
 //////////////////////////ToDo List//////////////////////////////////
 //******************************************************************//
-const todoFunction =() => {
-///variable to store the todo list
-let list = [];
-$('.container').empty();
-//adding a form to the body
-$('.container').append($('<div>').addClass('todoContent'));
-let appendingTodoString='<form><input type="text" id="input-box"/>';
-appendingTodoString += '<input type="submit" id="submit-btn"/>';
-appendingTodoString += '<input type="reset" /> </form>';
-$('.todoContent').append($(appendingTodoString));
-$('.todoContent').append($('<ul>').attr('id','listitem'));
+const todoFunction = () => {
+    let list = [];
 
-const render = () => {
-console.log("inside render");
-  $('#listitem').append('<li>' + list[list.length - 1] + '</li>');
-  // console.log('list',list);
-  $('li').on('click', (event) => {
-    $(event.target).css('text-decoration', 'line-through');
-    $(event.target).append($('<button id="remove-btn">REMOVE</button>'));
-    $('#remove-btn').on('click',(event1) => {
-      $(event1.target).parent().remove();
-    })
 
+
+  ///variable to store the todo list
+
+  $('.container').empty();
+  //adding a form to the body
+  $('.container').append($('<div>').addClass('todoContent'));
+  //adding the input to the form
+  let appendingTodoString = '<form><input type="text" id="input-box"/>';
+  //adding submit button to the form
+  appendingTodoString += '<input type="submit" id="submit-btn"/>';
+  //adding reset button to the form
+  appendingTodoString += '<input type="reset" /> </form>';
+  $('.todoContent').append($(appendingTodoString));
+  $('.todoContent').append($('<ul>').attr('id', 'listitem'));
+
+  const render = () => {
+    console.log("inside render");
+    $('#listitem').append('<li>' + list[list.length - 1] + '</li>');
+    $('li').on('click', (event) => {
+      $(event.target).css('text-decoration', 'line-through');
+      $(event.target).append($('<button id="remove-btn">REMOVE</button>'));
+      $('#remove-btn').on('click', (event1) => {
+        $(event1.target).parent().remove();
+      })
+    });
+  }
+////if teh weather is cold we are adding msg to get the jacket
+  $.ajax({
+    url: `http://api.openweathermap.org/data/2.5/weather?zip=94087&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
+  }).then((data) => {
+    ////converting to fahreinheit funtcion
+    const convertToFahrenheit = (num) => {
+      num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
+      return num;
+    }
+    (convertToFahrenheit(data.main.temp_min)<60.0)?list.push('better pack ur jacket weather is cold today'):list.push('Pack ur hat');
+    render();
+    //console.log(data.main.temp);
+  }, (error) => {
+    console.log(error);
+  })
+
+
+  $('form').on('submit', (event) => {
+    const inputValue = $('#input-box').val();
+    list.push(inputValue)
+    event.preventDefault();
+    $(event.currentTarget).trigger('reset');
+    render();
   });
-}
-
-$('form').on('submit', (event) => {
-  const inputValue = $('#input-box').val();
-  list.push(inputValue)
-  //console.log( inputValue );
-  event.preventDefault();
-  $(event.currentTarget).trigger('reset');
-  render();
-});
 
 
 }
@@ -150,7 +170,7 @@ $('form').on('submit', (event) => {
 
 //https://www.emoji.co.uk/files/phantom-open-emojis/animals-nature-phantom/12490-jack-o-lantern.png
 const gameFunction = () => {
-$('.container').empty();
+  $('.container').empty();
   const removeChildren = () => {
     $('#leftid').children().remove();
     $('#rightid').children().remove();
@@ -186,19 +206,19 @@ $('.container').empty();
 
   //////////////////////////////////////////Fail case/////////////////////////
 
-  // $('body').on('click', (event) => {
-  //   let playAgain = confirm("Game Over! Restart Game?");
-  //   if (playAgain === true) {
-  //     removeChildren();
-  //     numberOfFaces = 5;
-  //     //console.log(numberOfFaces);
-  //     generateFaces();
-  //   } else {
-  //     ('body').prop('onclick', null).off('click');
-  //     ('#difference').prop('onclick', null).off('click');
-  //   }
-  //
-  // });
+  $('.gameContainer').on('click', (event) => {
+    let playAgain = confirm("Game Over! Restart Game?");
+    if (playAgain === true) {
+      removeChildren();
+      numberOfFaces = 5;
+      //console.log(numberOfFaces);
+      generateFaces();
+    } else {
+      ('.gameContainer').prop('onclick', null).off('click');
+      ('#difference').prop('onclick', null).off('click');
+    }
+
+  });
   generateFaces();
 }
 
@@ -213,6 +233,6 @@ $(() => {
   $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
   $('#games').on('click', gameFunction)
-  $('#todo').on('click',todoFunction)
+  $('#todo').on('click', todoFunction)
 
 })
