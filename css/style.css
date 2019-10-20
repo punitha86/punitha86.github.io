@@ -1,4 +1,18 @@
 /* page styling */
+
+header{
+  overflow:hidden;
+/* background-image: url('/Users/arivmanivasagam/personalprojects/punitha86.github.io/image/morning-coffee.jpeg'); */
+/* background-size: cover; */
+/* background-repeat: no-repeat; */
+}
+header img{
+  width:100%;
+  height:50%;
+  /* margin-left:50%; */
+  /* transform: translateX(-50%); */
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
   display: flex;
@@ -49,9 +63,6 @@
   align-items: center;
 }
 
-header>img {
-  height: 40% width:100% text-align: center;
-}
 
 /* .description {
   display: none;

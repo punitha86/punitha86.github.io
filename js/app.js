@@ -5,6 +5,7 @@
 const homepageFunction = () => {
 
   $('.container').empty();
+  // $('.container').append($('<img>').attr('src','image/morning-coffee.jpeg'))
   $('.container').append($('<p>').text('Everyone has a ritual that helps set the tone for the day ahead. Knowing exactly how the first few minutes of your day will look is a tool we can implement that will leave us feeling empowered as we face the rest of our day. It’s important to cultivate this sacred time for yourself and begin each day with intention.'));
     $('.container').append($('<p>').text('Designing a morning that aligns with what feels right for you is imperative, so be sure to create a space that resonates with you rather than simply following a routine that works for someone else. Remember, what works for one person may not work for you, and that’s okay. Some people have extremely detailed mornings and others simply take five minutes to express gratitude for the life they have been given. Whatever you choose is perfect for you and will create a snowball effect of intention and self-honoring choices the rest of your day.'));
   $('.container').append($('<p>').text('Looking to begin a morning ritual but still need a little inspiration? Here are some examples of morning rituals to help you get started.'));
@@ -54,11 +55,12 @@ const newsAjaxCall = () => {
       //$('.content').append('<p>'+x.description+'</p>');
     })
 
+
     //////////////writing the carousel logic///////////////
     let currentImgIndex = 0;
     let highestIndex = $('.news-carousel-images').children().length - 1;
     console.log(highestIndex, currentImgIndex);
-    $('.next').on('click', () => {
+    const clickNextNews = () => {
       ///first moving to the next element/////////
       //hiding the first image//////
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'none');
@@ -66,7 +68,8 @@ const newsAjaxCall = () => {
       (currentImgIndex < highestIndex) ? currentImgIndex += 1: currentImgIndex = 0;
       //bringing up the next image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
-    });
+    }
+    $('.next').on('click',clickNextNews);
     /////moving to the previous element/////////
     //hiding current element
     $('.previous').on('click', () => {
@@ -76,7 +79,7 @@ const newsAjaxCall = () => {
       //bringing up the previous image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
     })
-
+setInterval(clickNextNews,5000);
 
   }, (error) => {
     console.log(error);
@@ -264,7 +267,7 @@ const gameFunction = () => {
   ////generarte the faces//////////////
   const generateFaces = () => {
     for (let i = 0; i < noOfFaces; i++) {
-      let randomTopAttribute = Math.floor(Math.random() * 100) + 40;
+      let randomTopAttribute = Math.floor(Math.random() * 50) + 75;
       let randomLeftAttribute = Math.floor((Math.random() * 43) + 2);
       $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', randomLeftAttribute + "%"));
       $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', (randomLeftAttribute + 50) + "%"));
@@ -305,7 +308,7 @@ $(() => {
   let sticky =$navbar.offset().top;
 $(window).scroll(() => {
   if ($(window).scrollTop() >= sticky) {
-    console.log("inside window");
+    //console.log("inside window");
     $navbar.addClass("sticky")
   } else {
     $navbar.removeClass("sticky");
