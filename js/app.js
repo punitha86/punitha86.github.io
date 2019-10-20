@@ -72,15 +72,20 @@ const newsAjaxCall = () => {
 
 const weatherAjaxCall = () => {
   $('.container').empty();
-  $('.container').append($('<input type="text" placeholder="ZipCode Please!!"/>'));
+  $('.container').append($('<div>').addClass('weatherContainer'))
 
-  $('.container').append($('<button type="button">SUBMIT</button>'))
+  ///trying to validate the input from user
+  $('.weatherContainer').append($('<input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="Enter zipcode Please">'));
+
+
+  $('.weatherContainer').append($('<button type="button">SUBMIT</button>'))
   event.preventDefault();
-  $('.container').append($('<div>').addClass('weathercontent'))
+  $('.container').append($('<div>').addClass('weathercontent'));
   $('button').on('click', () => {
 
     let userInput = $('input[type="text"]').val();
     (userInput != "") ? userInput = $('input[type="text"]').val(): userInput = '94087';
+    localStorage.setItem('zip', userInput);
     $.ajax({
       url: `http://api.openweathermap.org/data/2.5/weather?zip=${userInput}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
     }).then((data) => {
@@ -108,8 +113,10 @@ const weatherAjaxCall = () => {
 //******************************************************************//
 const todoFunction = () => {
   let list = [];
-let counter = 0;
-
+  ///counter value to check if its the first render of the page;
+  let counter = 0;
+  /////local storage retrieval
+  $('#list-items').html(localStorage.getItem('listItems'));
 
   ///variable to store the todo list
 
@@ -123,44 +130,27 @@ let counter = 0;
   //adding reset button to the form
   appendingTodoString += '<input type="reset" /> </form>';
   $('.todoContent').append($(appendingTodoString));
-  $('.todoContent').append($('<ul>').attr('id', 'listitem'));
+  $('.todoContent').append($('<ul>').attr('id', 'list-items'));
 
-  const render = () => {
-    console.log("inside render");
-    ///counter value to check if its the first render of the page;
-
-    let itemList = localStorage.getItem('listitem').split(',');
-    console.log(itemList);
-    if (counter === 0) {
-      for (i = 0; i < itemList.length; i++) {
-        $('#listitem').append('<li>' + itemList[i] + '</li>');
-      }
-    } else {
-      $('#listitem').append('<li>' + itemList[itemList.length - 1] + '</li>');
-    }
-
-
-    //localStorage.getItem('listitem'));
-    //'<li>' + list[list.length - 1] + '</li>');
-    $('li').on('click', (event) => {
-      $(event.currentTarget).css('text-decoration', 'line-through');
-      $(event.target).append($('<button id="remove-btn">REMOVE</button>'));
-      $('#remove-btn').on('click', (event1) => {
-        $(event1.target).parent().remove();
-      })
-    });
+  const render = (value) => {
+    $('#list-items').append($('<li>').text(value));
   }
+
   ////if teh weather is cold we are adding msg to get the jacket
   $.ajax({
     url: `http://api.openweathermap.org/data/2.5/weather?zip=94087&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
   }).then((data) => {
     ////converting to fahreinheit funtcion
     const convertToFahrenheit = (num) => {
-        num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
-        return num;
-      }
-      (convertToFahrenheit(data.main.temp_min) < 60.0) ? list.push('better pack ur jacket weather is cold today') : list.push('Pack ur hat');
-    render();
+      num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
+      return num;
+    }
+    ///If temperature is less than 60F add item to do list
+    if (convertToFahrenheit(data.main.temp_min) < 60.0) {
+      //$('#list-items').push('Better pack ur jacket weather is cold today');
+      render('Better pack ur jacket weather is cold today');
+    }
+
     //console.log(data.main.temp);
   }, (error) => {
     console.log(error);
@@ -168,17 +158,73 @@ let counter = 0;
 
 
   $('form').on('submit', (event) => {
-    const inputValue = $('#input-box').val();
-    list.push(inputValue);
-    counter++;
-    localStorage.setItem('listitem', list);
     event.preventDefault();
-    $(event.currentTarget).trigger('reset');
-    render();
+    const inputValue = $('#input-box').val();
+    if (inputValue) {
+      $('#list-items').append($('<li>').text(inputValue));
+      localStorage.setItem('listItems', $('#list-items').html());
+      $(event.currentTarget).trigger('reset');
+
+      $('li').on('click', (event) => {
+        console.log(event.target);
+        //console.log(event.currentTarget);
+        $(event.target).css('text-decoration', 'line-through');
+        //event.stopPropagation();
+        $(event.target).append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
+
+        $('.remove-btn').on('click', (event1) => {
+          $(event1.target).parent().remove();
+          localStorage.setItem('listItems', $('#list-items').html());
+        });
+      });
+
+    }
+
+
   });
 
 
 }
+///////////////code graveyard for todo listItems
+// //updating the list from local storage
+// let itemList = localStorage.getItem('listitem').split(',');
+// //console.log(itemList);
+// ///checking if its the first load of teh page then update the weather value and older values
+// if (counter === 0) {
+//   console.log(itemList);
+//   for (i = 1; i < itemList.length; i++) {
+//     $('#listitem').append(`<li id=${i}>`+ itemList[i] + '</li>');
+//   }
+//     itemList=[];
+//     itemList.push(list[0]);
+//     $('#listitem').append('<li id=0>' + itemList[0] + '</li>');
+// } else {
+//   let temp=itemList.length-1;
+//   console.log(temp);
+//   $('#listitem').append(`<li id=${temp} >` + itemList[itemList.length - 1] + '</li>');
+
+
+
+//localStorage.getItem('listitem'));
+//'<li>' + list[list.length - 1] + '</li>');
+
+//list.push(inputValue);
+//counter++;
+//localStorage.setItem('listitem', list);
+
+//let idOfClicked=$(event1.target).parent().attr('id');
+//console.log($(event1.target).parent().attr('id'));
+// function filterData() {
+//     var data = JSON.parse(localStorage.listitem);
+//     //console.log(data);
+//     var newData = data.filter(function(val){
+//         return (val.length !== idOfClicked && val.YourPropertyName !== listitem);
+//     });
+//     localStorage.listitem = JSON.stringify(newData);
+// }
+// filterData();
+//localStorage.listitem.removeItem($(event1.target).parent().attr('id'));
+//console.log(localStorage);
 
 //******************************************************************//
 ///////////////////////////Games////////////////////////////////////////
@@ -202,7 +248,7 @@ const gameFunction = () => {
   ////generarte the faces//////////////
   const generateFaces = () => {
     for (let i = 0; i < noOfFaces; i++) {
-      let randomTopAttribute = Math.floor(Math.random() * 50) + 60;
+      let randomTopAttribute = Math.floor(Math.random() * 50) + 30;
       let randomLeftAttribute = Math.floor((Math.random() * 43) + 2);
       $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', randomLeftAttribute + "%"));
       $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', (randomLeftAttribute + 50) + "%"));
@@ -230,8 +276,8 @@ const gameFunction = () => {
       //console.log(numberOfFaces);
       generateFaces();
     } else {
-      ('.gameContainer').prop('onclick', null).off('click');
-      ('#difference').prop('onclick', null).off('click');
+      ('.gameContainer').prop('onclick', null);
+      ('#difference').prop('onclick', null);
     }
 
   });

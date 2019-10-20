@@ -1,3 +1,30 @@
+/* page styling */
+/* Add a black background color to the top navigation */
+.topnav {
+  display: flex;
+  flex-direction: row;
+  background-color: #333;
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  display: inline-flex;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Add an active class to highlight the current page */
+.topnav a.active {
+  background-color: #d3d3d3;
+  color: white;
+}
+
+/* **********************************news styling*********************** */
 .container {
   display: flex;
   flex-direction: column;
@@ -49,33 +76,25 @@ header>img {
 .news-carousel-button:hover {
   cursor: pointer;
 }
+/* carousel styling end */
 
-/* Add a black background color to the top navigation */
-.topnav {
-  display: flex;
-  flex-direction: row;
-  background-color: #333;
-  overflow: hidden;
-  justify-content: space-between;
+
+/* **********************************weather styling*********************** */
+
+#zip:invalid{
+  border:1px dashed red;
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  display: inline-flex;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
+/* todo */
+.remove-btn:first-of-type{
   text-decoration: none;
-  font-size: 17px;
+  display:block;
 }
-
-/* Add an active class to highlight the current page */
-.topnav a.active {
-  background-color: #d3d3d3;
-  color: white;
+.remove-btn{
+  text-decoration: none;
+  display:none;
 }
-
-/* Gaming styling */
+/* **********************************Game styling*********************** */
 .smileyimg {
   width: 50px;
   height: 50px;
