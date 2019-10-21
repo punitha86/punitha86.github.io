@@ -11,6 +11,7 @@ const homepageFunction = () => {
   $('.container').append($('<p>').text('Looking to begin a morning ritual but still need a little inspiration? Here are some examples of morning rituals to help you get started.'));
   $('.container').append($('<p>').text('Barack Obama, President Taking care of physical fitness and family are two important elements of President Obama\’s daily ritual. He starts his day with a workout at 6:45 a.m., reads several newspapers, has breakfast with his family, and then starts his work day just before 9:00 a.m. in the morning. He may work as late as 10:00 p.m. some evenings, but always stops to have dinner with his family each day.'));
   $('.container').append($('<p>').text('Benjamin Franklin, a founding father of the United States. Franklin\’s much-lauded to-do list included some specific rules for how he started each morning. His three-hour block of morning routine stretched from 5:00 a.m. to 7:00 a.m. and included addressing “Powerful Goodness” and setting a plan for the rest of his day.Every morning Franklin asked himself, “What good shall I do today?”'));
+
 }
 
 
@@ -41,7 +42,7 @@ const newsAjaxCall = () => {
       let appendingString = `<div class="newsDiv">`;
       appendingString += `<img src=${x.urlToImage} class='newsimg' style="width:100%;height=100%">`;
       appendingString += `<p class='newsPara'> ${x.title}</p>`;
-      appendingString += `<article class='description'> ${x.description} </article></div>`;
+      appendingString += `<article class='description'> ${x.description} </article> News Link to the site:<br><a href="${x.url}" target="_blank">${x.url}</a></div>`;
       //  $('.newsDiv').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
       //  $('.newsDiv ').append($('<p>').text(x.title).addClass('newsPara'));
       //  $('.newsDiv').append($('<p>').text(x.description).hide());
@@ -50,11 +51,11 @@ const newsAjaxCall = () => {
     } //end of for loop
     //on click of the images we need to give out its conetent
     $('.newsDiv').on('click', () => {
+      clearInterval(interval);
       console.log($(event.currentTarget).children().eq(2));
       $(event.currentTarget).children().eq(2).css('display', 'block');
       //$('.content').append('<p>'+x.description+'</p>');
     })
-
 
     //////////////writing the carousel logic///////////////
     let currentImgIndex = 0;
@@ -79,7 +80,7 @@ const newsAjaxCall = () => {
       //bringing up the previous image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
     })
-setInterval(clickNextNews,5000);
+let interval= setInterval(clickNextNews,5000);
 
   }, (error) => {
     console.log(error);
@@ -267,10 +268,10 @@ const gameFunction = () => {
   ////generarte the faces//////////////
   const generateFaces = () => {
     for (let i = 0; i < noOfFaces; i++) {
-      let randomTopAttribute = Math.floor(Math.random() * 50) + 75;
+      let randomTopAttribute = Math.floor(Math.random() * 50) + 80;
       let randomLeftAttribute = Math.floor((Math.random() * 43) + 2);
-      $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', randomLeftAttribute + "%"));
-      $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "%").css('left', (randomLeftAttribute + 50) + "%"));
+      $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vw").css('left', randomLeftAttribute + "vw"));
+      $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vw").css('left', (randomLeftAttribute + 50) + "vw"));
     } //end of for loop
     $('#rightid').children().last().remove();
     $('#leftid').children().last().attr('id', 'difference');
@@ -302,7 +303,24 @@ const gameFunction = () => {
   });
   generateFaces();
 }
-
+/////////////////contact us form functions///////////
+// Validating Empty Field
+// function check_empty() {
+// if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
+// alert("Fill All Fields !");
+// } else {
+// document.getElementById('form').submit();
+// alert("Form Submitted Successfully...");
+// }
+// }
+// //Function To Display Popup
+// function div_show() {
+// document.getElementById('abc').style.display = "block";
+// }
+// //Function to Hide Popup
+// function div_hide(){
+// document.getElementById('abc').style.display = "none";
+// }
 $(() => {
   let $navbar= $('#myTopnav');
   let sticky =$navbar.offset().top;
@@ -314,7 +332,7 @@ $(window).scroll(() => {
     $navbar.removeClass("sticky");
   }
 })
-homepageFunction();
+// homepageFunction();
   $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
   $('#games').on('click', gameFunction)
