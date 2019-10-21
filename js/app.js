@@ -4,13 +4,8 @@
 
 const homepageFunction = () => {
 
-  $('.container').empty();
-  // $('.container').append($('<img>').attr('src','image/morning-coffee.jpeg'))
-  $('.container').append($('<p>').text('Everyone has a ritual that helps set the tone for the day ahead. Knowing exactly how the first few minutes of your day will look is a tool we can implement that will leave us feeling empowered as we face the rest of our day. It’s important to cultivate this sacred time for yourself and begin each day with intention.'));
-    $('.container').append($('<p>').text('Designing a morning that aligns with what feels right for you is imperative, so be sure to create a space that resonates with you rather than simply following a routine that works for someone else. Remember, what works for one person may not work for you, and that’s okay. Some people have extremely detailed mornings and others simply take five minutes to express gratitude for the life they have been given. Whatever you choose is perfect for you and will create a snowball effect of intention and self-honoring choices the rest of your day.'));
-  $('.container').append($('<p>').text('Looking to begin a morning ritual but still need a little inspiration? Here are some examples of morning rituals to help you get started.'));
-  $('.container').append($('<p>').text('Barack Obama, President Taking care of physical fitness and family are two important elements of President Obama\’s daily ritual. He starts his day with a workout at 6:45 a.m., reads several newspapers, has breakfast with his family, and then starts his work day just before 9:00 a.m. in the morning. He may work as late as 10:00 p.m. some evenings, but always stops to have dinner with his family each day.'));
-  $('.container').append($('<p>').text('Benjamin Franklin, a founding father of the United States. Franklin\’s much-lauded to-do list included some specific rules for how he started each morning. His three-hour block of morning routine stretched from 5:00 a.m. to 7:00 a.m. and included addressing “Powerful Goodness” and setting a plan for the rest of his day.Every morning Franklin asked himself, “What good shall I do today?”'));
+ //$('#wrapdiv').empty();
+
 
 }
 
@@ -120,6 +115,8 @@ const weatherAjaxCall = () => {
       $('.weathercontent').append($('<p>').text("Humidity : " + data.main.humidity));
       $('.weathercontent').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min)));
       $('.weathercontent').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max)));
+        $('.weathercontent').append($('<p>').text("Weather : " + data.weather.main));
+        $('.weathercontent').append($('<p>').text("Description : " + data.weather.description));
       //console.log(data.main.temp);
     }, (error) => {
       console.log(error);
@@ -253,6 +250,7 @@ const todoFunction = () => {
 //https://www.emoji.co.uk/files/phantom-open-emojis/animals-nature-phantom/12490-jack-o-lantern.png
 const gameFunction = () => {
   $('.container').empty();
+  $('header').remove();
   const removeChildren = () => {
     $('#leftid').children().remove();
     $('#rightid').children().remove();
@@ -268,10 +266,10 @@ const gameFunction = () => {
   ////generarte the faces//////////////
   const generateFaces = () => {
     for (let i = 0; i < noOfFaces; i++) {
-      let randomTopAttribute = Math.floor(Math.random() * 50) + 80;
+      let randomTopAttribute = Math.floor(Math.random() * 70) + 25;
       let randomLeftAttribute = Math.floor((Math.random() * 43) + 2);
-      $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vw").css('left', randomLeftAttribute + "vw"));
-      $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vw").css('left', (randomLeftAttribute + 50) + "vw"));
+      $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vh").css('left', randomLeftAttribute + "vw"));
+      $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vh").css('left', (randomLeftAttribute + 50) + "vw"));
     } //end of for loop
     $('#rightid').children().last().remove();
     $('#leftid').children().last().attr('id', 'difference');
@@ -332,6 +330,46 @@ $(window).scroll(() => {
     $navbar.removeClass("sticky");
   }
 })
+
+const imgURLArray=['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/41.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/45.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/42a.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/46.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/26.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/39.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/54-e1519797270413.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/37.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/36-e1519797518910.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/38-e1519797741104.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/33.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/43-e1519798004175.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/3-1-e1519701451376.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/1-1.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/2-e1519701820341.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/9.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/17-e1519728325574.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/53.jpg',
+'https://www.spiritbutton.com/wp-content/uploads/2018/02/50.jpg']
+  //$('.container').empty();
+  // $('.container').append($('<img>').attr('src','image/morning-coffee.jpeg'))
+  const selectRandomNum = () => {
+    return Math.floor(Math.random() * 21)+1;
+  }
+    let $wrapdiv=$('<div>');
+    $('.randomImg').append($wrapdiv.attr('id','wrapdiv').addClass("wrapper"));
+
+//$('#wrapdiv').children().remove();
+    for (i = 0; i <= 2; i++) {
+      const $div1 = $('<div>').addClass('selectedImg');
+      console.log(imgURLArray[selectRandomNum()]);
+      $div1.css('background-image', 'url(\'' + imgURLArray[selectRandomNum()] + '\')');
+      $('#wrapdiv').append($div1);
+  }
+
 // homepageFunction();
   $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
