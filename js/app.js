@@ -4,7 +4,7 @@
 
 const homepageFunction = () => {
 
- //$('#wrapdiv').empty();
+  //$('#wrapdiv').empty();
 
 
 }
@@ -65,7 +65,7 @@ const newsAjaxCall = () => {
       //bringing up the next image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
     }
-    $('.next').on('click',clickNextNews);
+    $('.next').on('click', clickNextNews);
     /////moving to the previous element/////////
     //hiding current element
     $('.previous').on('click', () => {
@@ -75,7 +75,7 @@ const newsAjaxCall = () => {
       //bringing up the previous image and description//
       $('.news-carousel-images').children().eq(currentImgIndex).css('display', 'block');
     })
-let interval= setInterval(clickNextNews,5000);
+    let interval = setInterval(clickNextNews, 5000);
 
   }, (error) => {
     console.log(error);
@@ -87,42 +87,53 @@ let interval= setInterval(clickNextNews,5000);
 
 const weatherAjaxCall = () => {
   $('.container').empty();
-  $('.container').append($('<div>').addClass('weatherContainer'))
+
 
   ///trying to validate the input from user
-  $('.weatherContainer').append($('<input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="Enter zipcode Please">'));
+  $('.container').append($('<input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="Enter zipcode Please">'));
 
 
-  $('.weatherContainer').append($('<button type="button">SUBMIT</button>'))
+  $('.container').append($('<button type="button">SUBMIT</button>'))
   event.preventDefault();
-  $('.container').append($('<div>').addClass('weathercontent'));
+  $('.container').append($('<div>').addClass('weatherContainer'));
+  $('.weatherContainer').append($('<div>').addClass('weathericon'));
+  $('.weatherContainer').append($('<div>').addClass('weathercontent'));
+
   $('button').on('click', () => {
 
     let userInput = $('input[type="text"]').val();
     (userInput != "") ? userInput = $('input[type="text"]').val(): userInput = '94087';
     localStorage.setItem('zip', userInput);
-    $.ajax({
-      url: `http://api.openweathermap.org/data/2.5/weather?zip=${userInput}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
-    }).then((data) => {
-      ////converting to fahreinheit funtcion
-      const convertToFahrenheit = (num) => {
-        num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
-        return num;
-      }
-      $('.weathercontent').empty();
-      $('.weathercontent').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp)));
-      $('.weathercontent').append($('<p>').text("Pressure : " + data.main.pressure));
-      $('.weathercontent').append($('<p>').text("Humidity : " + data.main.humidity));
-      $('.weathercontent').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min)));
-      $('.weathercontent').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max)));
-        $('.weathercontent').append($('<p>').text("Weather : " + data.weather.main));
-        $('.weathercontent').append($('<p>').text("Description : " + data.weather.description));
-      //console.log(data.main.temp);
-    }, (error) => {
-      console.log(error);
-    })
+    weatherAjaxFunction();
+    });
+    const weatherAjaxFunction = () => {
+      $.ajax({
+        url: `http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.getItem('zip')}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
+      }).then((data) => {
+        ////converting to fahreinheit funtcion
+        const convertToFahrenheit = (num) => {
+          num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
+          return num;
+        }
+        $('.weathercontent').empty();
+        $('.weathericon').empty();
+        $('.weathercontent').append($('<p>').text("City : " + (data.name)));
+        $('.weathercontent').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp) + "F"));
+        $('.weathercontent').append($('<p>').text("Humidity : " + data.main.humidity));
+        $('.weathercontent').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min) + "F"));
+        $('.weathercontent').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max) + "F"));
+        // console.log(data.weather[0].main);
+        // $('.weathercontent').append($('<p>').text("Weather : " + data.weather[0].icon));
+        $('.weathericon').append($(`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">`))
+        $('.weathericon').append($('<p>').text(data.weather[0].description));
+        //console.log(data.main.temp);
+      }, (error) => {
+        console.log(error);
+      })
+    }
 
-  });
+
+weatherAjaxFunction();
 
 }
 //******************************************************************//
@@ -320,57 +331,58 @@ const gameFunction = () => {
 // document.getElementById('abc').style.display = "none";
 // }
 $(() => {
-  let $navbar= $('#myTopnav');
-  let sticky =$navbar.offset().top;
-$(window).scroll(() => {
-  if ($(window).scrollTop() >= sticky) {
-    //console.log("inside window");
-    $navbar.addClass("sticky")
-  } else {
-    $navbar.removeClass("sticky");
-  }
-})
+  let $navbar = $('#myTopnav');
+  let sticky = $navbar.offset().top;
+  $(window).scroll(() => {
+    if ($(window).scrollTop() >= sticky) {
+      //console.log("inside window");
+      $navbar.addClass("sticky")
+    } else {
+      $navbar.removeClass("sticky");
+    }
+  })
 
-const imgURLArray=['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/41.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/45.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/42a.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/46.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/26.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/39.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/54-e1519797270413.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/37.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/36-e1519797518910.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/38-e1519797741104.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/33.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/43-e1519798004175.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/3-1-e1519701451376.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/1-1.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/2-e1519701820341.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/9.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/17-e1519728325574.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/53.jpg',
-'https://www.spiritbutton.com/wp-content/uploads/2018/02/50.jpg']
+  const imgURLArray = ['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/41.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/45.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/42a.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/46.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/26.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/39.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/54-e1519797270413.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/37.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/36-e1519797518910.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/38-e1519797741104.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/33.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/43-e1519798004175.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/3-1-e1519701451376.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/1-1.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/2-e1519701820341.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/9.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/17-e1519728325574.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/53.jpg',
+    'https://www.spiritbutton.com/wp-content/uploads/2018/02/50.jpg'
+  ]
   //$('.container').empty();
   // $('.container').append($('<img>').attr('src','image/morning-coffee.jpeg'))
   const selectRandomNum = () => {
-    return Math.floor(Math.random() * 21)+1;
+    return Math.floor(Math.random() * 21) + 1;
   }
-    let $wrapdiv=$('<div>');
-    $('.randomImg').append($wrapdiv.attr('id','wrapdiv').addClass("wrapper"));
+  let $wrapdiv = $('<div>');
+  $('.randomImg').append($wrapdiv.attr('id', 'wrapdiv').addClass("wrapper"));
 
-//$('#wrapdiv').children().remove();
-    for (i = 0; i <= 2; i++) {
-      const $div1 = $('<div>').addClass('selectedImg');
-      console.log(imgURLArray[selectRandomNum()]);
-      $div1.css('background-image', 'url(\'' + imgURLArray[selectRandomNum()] + '\')');
-      $('#wrapdiv').append($div1);
+  //$('#wrapdiv').children().remove();
+  for (i = 0; i <= 2; i++) {
+    const $div1 = $('<div>').addClass('selectedImg');
+    console.log(imgURLArray[selectRandomNum()]);
+    $div1.css('background-image', 'url(\'' + imgURLArray[selectRandomNum()] + '\')');
+    $('#wrapdiv').append($div1);
   }
 
-// homepageFunction();
+  // homepageFunction();
   $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
   $('#games').on('click', gameFunction)

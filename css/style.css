@@ -168,7 +168,24 @@ li::selection{
 #zip:invalid{
   border:1px dashed red;
 }
-
+.weatherContainer{
+  margin:2vw;
+  padding:2vw;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  border:1px solid orange;
+}
+.weathericon{
+  width:48vw;
+  text-align: center;
+}
+.weathercontent{
+  padding:2vw;
+  width:48vw;
+  text-align: left;
+}
 /* todo */
 .remove-btn:first-of-type{
   text-decoration: none;
