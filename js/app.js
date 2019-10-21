@@ -105,35 +105,35 @@ const weatherAjaxCall = () => {
     (userInput != "") ? userInput = $('input[type="text"]').val(): userInput = '94087';
     localStorage.setItem('zip', userInput);
     weatherAjaxFunction();
-    });
-    const weatherAjaxFunction = () => {
-      $.ajax({
-        url: `http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.getItem('zip')}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
-      }).then((data) => {
-        ////converting to fahreinheit funtcion
-        const convertToFahrenheit = (num) => {
-          num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
-          return num;
-        }
-        $('.weathercontent').empty();
-        $('.weathericon').empty();
-        $('.weathercontent').append($('<p>').text("City : " + (data.name)));
-        $('.weathercontent').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp) + "F"));
-        $('.weathercontent').append($('<p>').text("Humidity : " + data.main.humidity));
-        $('.weathercontent').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min) + "F"));
-        $('.weathercontent').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max) + "F"));
-        // console.log(data.weather[0].main);
-        // $('.weathercontent').append($('<p>').text("Weather : " + data.weather[0].icon));
-        $('.weathericon').append($(`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">`))
-        $('.weathericon').append($('<p>').text(data.weather[0].description));
-        //console.log(data.main.temp);
-      }, (error) => {
-        console.log(error);
-      })
-    }
+  });
+  const weatherAjaxFunction = () => {
+    $.ajax({
+      url: `http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.getItem('zip')}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
+    }).then((data) => {
+      ////converting to fahreinheit funtcion
+      const convertToFahrenheit = (num) => {
+        num = parseFloat((num - 273.15) * (9 / 5) + 32).toFixed(1);
+        return num;
+      }
+      $('.weathercontent').empty();
+      $('.weathericon').empty();
+      $('.weathercontent').append($('<p>').text("City : " + (data.name)));
+      $('.weathercontent').append($('<p>').text("Temperature : " + convertToFahrenheit(data.main.temp) + "F"));
+      $('.weathercontent').append($('<p>').text("Humidity : " + data.main.humidity));
+      $('.weathercontent').append($('<p>').text("Min-Temp : " + convertToFahrenheit(data.main.temp_min) + "F"));
+      $('.weathercontent').append($('<p>').text("Max-Temp : " + convertToFahrenheit(data.main.temp_max) + "F"));
+      // console.log(data.weather[0].main);
+      // $('.weathercontent').append($('<p>').text("Weather : " + data.weather[0].icon));
+      $('.weathericon').append($(`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">`))
+      $('.weathericon').append($('<p>').text(data.weather[0].description));
+      //console.log(data.main.temp);
+    }, (error) => {
+      console.log(error);
+    })
+  }
 
 
-weatherAjaxFunction();
+  weatherAjaxFunction();
 
 }
 //******************************************************************//
@@ -158,10 +158,11 @@ const todoFunction = () => {
   //adding reset button to the form
   appendingTodoString += '<input type="reset" /> </form>';
   $('.todoContent').append($(appendingTodoString));
-  $('.todoContent').append($('<ul>').attr('id', 'list-items'));
-
+  $('.todoContent').append($('<div>').addClass('todoListContent'));
+  $('.todoListContent').append($('<ul>').attr('id', 'list-items'));
+  //
   const render = (value) => {
-    $('#list-items').append($('<li>').text(value));
+  $('#list-items').append($('<li>').text(value));
   }
 
   ////if teh weather is cold we are adding msg to get the jacket
@@ -186,30 +187,30 @@ const todoFunction = () => {
 
 
   $('form').on('submit', (event) => {
-    event.preventDefault();
     const inputValue = $('#input-box').val();
     if (inputValue) {
-      $('#list-items').append($('<li>').text(inputValue));
+      $('#list-items').append("<li><span class='list'>" + inputValue + "</span></li>");
+      // $('#list-items').append($('<li>').text(inputValue));
       localStorage.setItem('listItems', $('#list-items').html());
       $(event.currentTarget).trigger('reset');
-
-      $('li').on('click', (event) => {
-        console.log(event.target);
-        //console.log(event.currentTarget);
-        $(event.target).css('text-decoration', 'line-through');
-        //event.stopPropagation();
-        $(event.target).append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
-
-        $('.remove-btn').on('click', (event1) => {
-          $(event1.target).parent().remove();
-          localStorage.setItem('listItems', $('#list-items').html());
-        });
-      });
-
     }
+    event.preventDefault();
 
+$('li').on('click', (event) => {
+  //console.log(localStorage);
+  //console.log(event.currentTarget);
+  $(event.target).css('text-decoration', 'line-through');
+  //event.stopPropagation();
+  $(event.target).append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
 
+  $('.remove-btn').on('click', (event1) => {
+    console.log($(event1.target).parent());
+    $(event1.target).parent().remove();
+    localStorage.setItem('listItems', $('#list-items').html());
   });
+});
+
+})
 
 
 }
@@ -267,8 +268,8 @@ const gameFunction = () => {
     $('#rightid').children().remove();
   }
   /////////////////////initial set up field for the smileys
-  $('.container').append($('<h2>').text("SMILEY GAME"));
-  $('.container').append($('<p>').text("Please click on the extra smiley face on the left"));
+  $('.container').append($('<h2>').text("SMILEY GAME").addClass('gameElem'));
+  $('.container').append($('<p>').text("Please click on the extra smiley face on the left").addClass('gameElem'));
   $('.container').append($('<div>').addClass('gameContainer'));
   $('.gameContainer').append($('<div>').addClass('leftsideGamediv').attr('id', 'leftid'));
   $('.gameContainer').append($('<div>').addClass('rightsideGamediv').attr('id', 'rightid'));
@@ -277,7 +278,7 @@ const gameFunction = () => {
   ////generarte the faces//////////////
   const generateFaces = () => {
     for (let i = 0; i < noOfFaces; i++) {
-      let randomTopAttribute = Math.floor(Math.random() * 70) + 25;
+      let randomTopAttribute = Math.floor(Math.random() * 60) + 25;
       let randomLeftAttribute = Math.floor((Math.random() * 43) + 2);
       $('#leftid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vh").css('left', randomLeftAttribute + "vw"));
       $('#rightid').append($('<img>').attr('src', 'image/smiley.png').addClass('smileyimg').css('top', randomTopAttribute + "vh").css('left', (randomLeftAttribute + 50) + "vw"));

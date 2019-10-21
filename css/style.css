@@ -1,68 +1,72 @@
 /* page styling */
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
   border-radius: 10px;
-  font-family: Open Sans,Helvetica,Arial,sans-serif;
+  font-family: Open Sans, Helvetica, Arial, sans-serif;
 }
-header{
-  overflow:hidden;
+
+header {
+  overflow: hidden;
 }
-header img{
-  width:100vw;
+
+header img {
+  width: 100vw;
   /* height:40vh; */
 }
-.container > p{
+
+.container>p {
   margin: 2vw;
 }
-.hmpage_text_div > img{
-  width:20vw;
+
+.hmpage_text_div>img {
+  width: 20vw;
   /* height:40vh; */
 }
-.mainpageArticle > .hmpage_text_div{
-  display:flex;
-  justify-content: space-between;
 
+.mainpageArticle>.hmpage_text_div {
+  display: flex;
+  justify-content: space-between;
 }
-.hmpage_text_div > p{
-  padding :1vw;
+
+.hmpage_text_div>p {
+  padding: 1vw;
   text-align: justify;
 }
-.mainpageArticle{
+
+.mainpageArticle {
   text-align: center;
   align-items: center;
   margin: 2vw;
 }
 
 /* styling for random image */
-
-.selectedImg{
-  width:30vw;
-  height:30vw;
+.selectedImg {
+  width: 30vw;
+  height: 30vw;
   background-repeat: no-repeat;
   background-size: cover;
 }
-.wrapper{
-  display:flex;
+
+.wrapper {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-li{
-  box-sizing:border-box;
+.list-quote {
+  box-sizing: border-box;
   list-style: none;
-margin: 10vw;
+  margin: 10vw;
   font-size: 1em;
-    line-height: 1.5;
-    color: #333;
-    background-color: #fff;
-}
-li::selection{
-  background-color: #faede3;
-}
-.list-quote{
-  margin-bottom:2em;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+  margin-bottom: 2em;
 }
 
+.list-quote::selection {
+  background-color: #faede3;
+}
 
 /* Add a black background color to the top navigation */
 .topnav {
@@ -88,10 +92,10 @@ li::selection{
   background-color: #d3d3d3;
   color: white;
 }
-//
+
 
 #myTopnav {
-  overflow:hidden;
+  overflow: hidden;
   background-color: #333;
 }
 
@@ -101,11 +105,11 @@ li::selection{
   top: 0;
   width: 100%;
 }
+
 /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
-.sticky + .content {
+.sticky+.content {
   padding-top: 60px;
 }
-
 
 /* **********************************news styling*********************** */
 .container {
@@ -113,7 +117,6 @@ li::selection{
   flex-direction: column;
   align-items: center;
 }
-
 
 /* .description {
   display: none;
@@ -132,14 +135,17 @@ li::selection{
   box-sizing: border-box;
   box-shadow: 2px 2px #d3d3d3;
 }
-.news-carousel-images:first-child{
-  display:block;
+
+.news-carousel-images:first-child {
+  display: block;
 }
-.newsDiv:first-of-type{
+
+.newsDiv:first-of-type {
   width: 100%;
   border-radius: 10px;
-    display:block;
+  display: block;
 }
+
 .newsDiv {
   width: 100%;
   border-radius: 10px;
@@ -160,41 +166,97 @@ li::selection{
 .news-carousel-button:hover {
   cursor: pointer;
 }
+
 /* carousel styling end */
-
-
 /* **********************************weather styling*********************** */
-
-#zip:invalid{
-  border:1px dashed red;
+#zip:invalid {
+  border: 1px dashed red;
 }
-.weatherContainer{
-  margin:2vw;
-  padding:2vw;
-  display:flex;
+
+.weatherContainer {
+  margin: 2vw;
+  padding: 2vw;
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
   text-align: center;
-  border:1px solid orange;
+  border: 1px solid orange;
 }
-.weathericon{
-  width:48vw;
+
+.weathericon {
+  width: 48vw;
   text-align: center;
 }
-.weathercontent{
-  padding:2vw;
-  width:48vw;
+
+.weathercontent {
+  padding: 2vw;
+  width: 48vw;
   text-align: left;
 }
-/* todo */
-.remove-btn:first-of-type{
+
+/* **********************************Todo styling*********************** */
+.remove-btn:first-of-type {
   text-decoration: none;
-  display:block;
+  display: block;
+  float:right;
 }
-.remove-btn{
+
+.remove-btn {
   text-decoration: none;
-  display:none;
+  display: none;
 }
+form {
+  border-radius: 0;
+  outline: 0;
+  height: 36px;
+  margin-top: 5%;
+  /* border: 3px solid #3b3b3b; */
+  display:flex;
+  justify-content: space-around;
+}
+
+input[type="text"] {
+  outline: 0;
+  width: 55%;
+  height: 32px;
+  border: 1px solid black;
+  font-size: 18px;
+  font-weight: normal;
+  padding-left: 10px;
+  border-radius: 0;
+}
+
+.add {
+  outline: 0;
+  float: right;
+  width: 34%;
+  height: 36px;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  background-color: #3b3b3b;
+}
+
+ul {
+  padding: 0;
+  text-align: left;
+  list-style: none;
+}
+
+hr {
+  border-bottom: 0;
+  margin: 15px 0;
+}
+
+input[type="checkbox"] { width: 30px; }
+
+.remove {
+  float: right;
+  cursor: pointer;
+}
+
+.completed { text-decoration: line-through; }
 /* **********************************Game styling*********************** */
 .smileyimg {
   width: 3vw;
@@ -204,26 +266,32 @@ li::selection{
 
 .gameContainer {
   display: flex;
+  width: 100vw;
+  /* height: 80vw; */
+}
+
+.gameElem {
+  height: 1vw;
 }
 
 #leftid {
   margin: 0;
   width: 48vw;
-  height: 70vw;
+  height: 85vw;
   float: left;
   border-radius: 0;
-  border-right: 5px solid black;
+  border-right: 1px solid black;
 }
 
 #rightid {
-  /* display:inline-flex; */
   margin: 0;
   /* left: 400px; */
   width: 48vw;
-  height: 70vw;
+  height: 85vw;
   float: left;
   /* border-left: 5px solid yellow; */
 }
+
 /* contact us form styling
 @import "http://fonts.googleapis.com/css?family=Raleway";
 /*----------------------------------------------
