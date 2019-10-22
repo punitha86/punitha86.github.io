@@ -1,3 +1,29 @@
+//////////array of images for random quotes for each load/////////////
+const imgURLArray = ['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/41.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/45.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/42a.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/46.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/26.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/39.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/54-e1519797270413.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/37.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/36-e1519797518910.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/38-e1519797741104.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/33.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/43-e1519798004175.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/3-1-e1519701451376.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/1-1.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/2-e1519701820341.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/9.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/17-e1519728325574.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/53.jpg',
+  'https://www.spiritbutton.com/wp-content/uploads/2018/02/50.jpg'
+]
+
 //******************************************************************//
 //////////////////////////////News Ajax /////////////////////////
 //******************************************************************//
@@ -14,40 +40,42 @@ const newsAjaxCall = () => {
   $('.container').append($('<h1>').text('NEWS'));
   $('.container').append($('<div>').addClass('content'));
   $('.content').append($('<div>').addClass('news-carousel-button previous'));
-  $('.news-carousel-button previous').append($('<span class="lnr lnr-chevron-left"></span>'))
+   $('.news-carousel-button previous').append($('<span></span>'))
   $('.content').append($('<div>').addClass('news-carousel-images'));
   $('.content').append($('<div>').addClass('news-carousel-button next'));
-  $('.news-carousel-button next').append($('<span class="lnr lnr-chevron-right"></span>'))
+  $('.news-carousel-button next').append($('<span></span>'))
 
 
   $.ajax({
     url: "https://newsapi.org/v2/top-headlines?country=us&apiKey=c9b28a91c2114ad2bb5aed577298b412"
   }).then((data) => {
-    //$('.news-carousel-images').append($('<div>').addClass('newsDiv'))
-    //$('.news-carousel-images').append(('<div class="newsDiv">'));
     for (x of data.articles) {
       let appendingString = `<div class="newsDiv">`;
+      ///when api is not giving any image with the news
+      if(x.urlToImage!=null){
       appendingString += `<img src=${x.urlToImage} class='newsimg' style="width:100%;height=100%">`;
+    }else{
+      `<img class='newsimg'>`
+    }
       appendingString += `<p class='newsPara'> ${x.title}</p>`;
       appendingString += `<article class='description'> ${x.description} </article> News Link to the site:<br><a href="${x.url}" target="_blank">${x.url}</a></div>`;
-      //  $('.newsDiv').append($('<img>').attr('src', x.urlToImage).addClass('newsimg'));
-      //  $('.newsDiv ').append($('<p>').text(x.title).addClass('newsPara'));
-      //  $('.newsDiv').append($('<p>').text(x.description).hide());
+
       $('.news-carousel-images').append(appendingString);
       $('.description').hide();
     } //end of for loop
     //on click of the images we need to give out its conetent
     $('.newsDiv').on('click', () => {
       clearInterval(interval);
-      console.log($(event.currentTarget).children().eq(2));
+      //console.log($(event.currentTarget).children().eq(2));
       $(event.currentTarget).children().eq(2).css('display', 'block');
       //$('.content').append('<p>'+x.description+'</p>');
     })
+    $('.container').append($('<footer>').text('Powered by https://newsapi.org/').addClass('newsFooter'));
 
     //////////////writing the carousel logic///////////////
     let currentImgIndex = 0;
     let highestIndex = $('.news-carousel-images').children().length - 1;
-    console.log(highestIndex, currentImgIndex);
+    //console.log(highestIndex, currentImgIndex);
     const clickNextNews = () => {
       ///first moving to the next element/////////
       //hiding the first image//////
@@ -85,10 +113,10 @@ const weatherAjaxCall = () => {
 
 
   ///trying to validate the input from user
-  $('.container').append($('<input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="Enter zipcode Please">'));
+  $('.container').append($('<input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" id="weatherinput" class="weatherinputs" placeholder="Enter zipcode Please">'));
 
 
-  $('.container').append($('<button type="button">SUBMIT</button>'))
+  $('.container').append($('<button type="button" class="weatherinputs">SUBMIT</button>'))
   event.preventDefault();
   $('.container').append($('<div>').addClass('weatherContainer'));
   $('.weatherContainer').append($('<div>').addClass('weathericon'));
@@ -126,7 +154,7 @@ const weatherAjaxCall = () => {
       console.log(error);
     })
   }
-
+$('.container').append($('<footer>').text('Powered by https://openweathermap.org/api').addClass('weatherFooter'));
 
   weatherAjaxFunction();
 
@@ -202,7 +230,7 @@ const todoFunction = () => {
       $(event.target).append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
 
       $('.remove-btn').on('click', (event1) => {
-        console.log($(event1.target).parent());
+        //console.log($(event1.target).parent());
         $(event1.target).parent().remove();
         localStorage.setItem('listItems', $('#list-items').html());
       });
@@ -248,7 +276,7 @@ const gameFunction = () => {
 
     $('#difference').on('click', (event) => {
       event.stopPropagation();
-      console.log("won");
+      //console.log("won");
       removeChildren();
       noOfFaces += 5;
       generateFaces();
@@ -272,9 +300,9 @@ const gameFunction = () => {
   });
   generateFaces();
 }
-
+///////////////////////////////////////
 /////////tic-tac-toe///////////
-
+////////////////////////////////////////////
 const ticTacToeFunction = () => {
   $('header').remove();
   $('body').prepend($('<header>'));
@@ -291,7 +319,7 @@ const ticTacToeFunction = () => {
         $(event.target).text(mark).addClass(mark);
         (mark === 'X') ? mark = 'O': mark = 'X';
       } else {
-        console.log(mark, $(event.target).text());
+        //console.log(mark, $(event.target).text());
         alert("there is a value")
       }
       horizontalCheck();
@@ -376,6 +404,8 @@ const ticTacToeFunction = () => {
 
 ///onload function
 $(() => {
+
+  //sticky navbar
   let $navbar = $('#myTopnav');
   let sticky = $navbar.offset().top;
   $(window).scroll(() => {
@@ -387,41 +417,16 @@ $(() => {
     }
   })
 
-  ///simply using vanilla javascript for top dropdown naigation
+  ///simply using function for top dropdown naigation
   const loadDropDown = () => {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
+    let $myTopNav= $("#myTopnav");
+    if($myTopNav.hasClass('topnav')){
+      $myTopNav.addClass('responsive');
     }
   }
 
 
-  const imgURLArray = ['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/41.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/45.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/42a.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/46.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/26.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/39.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/54-e1519797270413.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/37.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/36-e1519797518910.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/38-e1519797741104.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/33.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/43-e1519798004175.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/3-1-e1519701451376.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/1-1.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/2-e1519701820341.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/9.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/17-e1519728325574.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/53.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/50.jpg'
-  ]
+
   const selectRandomNum = () => {
     return Math.floor(Math.random() * 21) + 1;
   }
@@ -431,18 +436,17 @@ $(() => {
 
   for (i = 0; i <= 2; i++) {
     const $div1 = $('<div>').addClass('selectedImg');
-    console.log(imgURLArray[selectRandomNum()]);
+    //console.log(imgURLArray[selectRandomNum()]);
     $div1.css('background-image', 'url(\'' + imgURLArray[selectRandomNum()] + '\')');
     $('#wrapdiv').append($div1);
   }
 
-  // homepageFunction();
-  $('#news').on('click', newsAjaxCall)
   $('.dropbtn').on('click', loadDropDown)
+
+  $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
   $('#games').on('click', gameFunction)
   $('#todo').on('click', todoFunction)
-
   $('#tictactoe').on('click', ticTacToeFunction)
 
 });
