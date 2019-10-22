@@ -165,7 +165,9 @@ header img {
 }
 
 article>p {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: lighter;
+  /* font-family: 'Montserrat', sans-serif; */
   /* font-family: 'Comfortaa', cursive; */
 }
 .hmpage_text_div:first-of-type{
@@ -181,14 +183,13 @@ article>p {
 .hmpage_text_div>p {
   padding: 1vw;
   text-align: justify;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 @media (max-width: 600px) {
   .hmpage_text_div>p {
     padding: 1vw;
     text-align: justify;
-    font-size: 10px;
     font-weight:small;
   }
 
@@ -422,7 +423,7 @@ hr {
   float: left;
 }
 
-/* tic tac toe styling */
+/************************** tic tac toe styling */
 .ticTacToeContainer {
   height: 100%;
   display: flex;
@@ -434,8 +435,8 @@ hr {
   padding-top: 1vw;
   padding-left: 1vw;
   padding-right: 1vw;
-  width: 70vw;
-  height: 70vw;
+  width: 50vw;
+  height: 50vw;
   display: flex;
   flex-wrap: wrap;
   border: 1px solid black;

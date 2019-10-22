@@ -276,6 +276,9 @@ const gameFunction = () => {
 /////////tic-tac-toe///////////
 
 const ticTacToeFunction = () => {
+  $('header').remove();
+  $('body').prepend($('<header>'));
+  $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
   $('.container').empty();
   $('.container').append($('<div>').addClass('ticTacToeContainer'));
   $('.ticTacToeContainer').append($('<div>').addClass('board'));
