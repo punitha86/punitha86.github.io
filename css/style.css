@@ -361,7 +361,7 @@ hr {
 .gameContainer {
   display: flex;
   width: 100vw;
-  /* height: 80vw; */
+  height: 80vw;
 }
 
 .gameElem {
@@ -379,11 +379,9 @@ hr {
 
 #rightid {
   margin: 0;
-  /* left: 400px; */
   width: 48vw;
   height: 85vw;
   float: left;
-  /* border-left: 5px solid yellow; */
 }
 /* tic tac toe styling */
 .ticTacToeContainer {
