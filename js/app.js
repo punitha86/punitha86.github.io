@@ -18,7 +18,11 @@ const homepageFunction = () => {
 const newsAjaxCall = () => {
   //creating container for teh news articles
   // <div class="container">
+  $('header').empty();
+  $('body').prepend($('<header>'));
+  $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
   $('.container').empty();
+  // $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
   $('.container').append($('<h1>').text('NEWS'));
   $('.container').append($('<div>').addClass('content'));
   $('.content').append($('<div>').addClass('news-carousel-button previous'));
@@ -86,6 +90,9 @@ const newsAjaxCall = () => {
 //******************************************************************//
 
 const weatherAjaxCall = () => {
+  $('header').empty();
+  $('body').prepend($('<header>'));
+  $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
   $('.container').empty();
 
 
@@ -145,6 +152,9 @@ const todoFunction = () => {
   let counter = 0;
   /////local storage retrieval
   $('#list-items').html(localStorage.getItem('listItems'));
+  $('header').empty();
+  $('body').prepend($('<header>'));
+  $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
 
   ///variable to store the todo list
 
@@ -214,46 +224,7 @@ $('li').on('click', (event) => {
 
 
 }
-///////////////code graveyard for todo listItems
-// //updating the list from local storage
-// let itemList = localStorage.getItem('listitem').split(',');
-// //console.log(itemList);
-// ///checking if its the first load of teh page then update the weather value and older values
-// if (counter === 0) {
-//   console.log(itemList);
-//   for (i = 1; i < itemList.length; i++) {
-//     $('#listitem').append(`<li id=${i}>`+ itemList[i] + '</li>');
-//   }
-//     itemList=[];
-//     itemList.push(list[0]);
-//     $('#listitem').append('<li id=0>' + itemList[0] + '</li>');
-// } else {
-//   let temp=itemList.length-1;
-//   console.log(temp);
-//   $('#listitem').append(`<li id=${temp} >` + itemList[itemList.length - 1] + '</li>');
 
-
-
-//localStorage.getItem('listitem'));
-//'<li>' + list[list.length - 1] + '</li>');
-
-//list.push(inputValue);
-//counter++;
-//localStorage.setItem('listitem', list);
-
-//let idOfClicked=$(event1.target).parent().attr('id');
-//console.log($(event1.target).parent().attr('id'));
-// function filterData() {
-//     var data = JSON.parse(localStorage.listitem);
-//     //console.log(data);
-//     var newData = data.filter(function(val){
-//         return (val.length !== idOfClicked && val.YourPropertyName !== listitem);
-//     });
-//     localStorage.listitem = JSON.stringify(newData);
-// }
-// filterData();
-//localStorage.listitem.removeItem($(event1.target).parent().attr('id'));
-//console.log(localStorage);
 
 //******************************************************************//
 ///////////////////////////Games////////////////////////////////////////
@@ -296,7 +267,7 @@ const gameFunction = () => {
     });
   }
 
-  //////////////////////////////////////////Fail case/////////////////////////
+  //////////////////////////////////Game Fail case/////////////////////////
 
   $('.gameContainer').on('click', (event) => {
     let playAgain = confirm("Game Over! Restart Game?");
@@ -306,31 +277,14 @@ const gameFunction = () => {
       //console.log(numberOfFaces);
       generateFaces();
     } else {
-      ('.gameContainer').prop('onclick', null);
-      ('#difference').prop('onclick', null);
+      ('.gameContainer').off('click');
+      ('#difference').off('click');
     }
 
   });
   generateFaces();
 }
-/////////////////contact us form functions///////////
-// Validating Empty Field
-// function check_empty() {
-// if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
-// alert("Fill All Fields !");
-// } else {
-// document.getElementById('form').submit();
-// alert("Form Submitted Successfully...");
-// }
-// }
-// //Function To Display Popup
-// function div_show() {
-// document.getElementById('abc').style.display = "block";
-// }
-// //Function to Hide Popup
-// function div_hide(){
-// document.getElementById('abc').style.display = "none";
-// }
+
 $(() => {
   let $navbar = $('#myTopnav');
   let sticky = $navbar.offset().top;
@@ -342,6 +296,14 @@ $(() => {
       $navbar.removeClass("sticky");
     }
   })
+  function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
 
   const imgURLArray = ['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
     'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
@@ -433,3 +395,63 @@ $(() => {
 // </body> -->
 // <!-- Body Ends Here -->
 // <!-- </html> -->
+
+
+/////////////////contact us form functions///////////
+// Validating Empty Field
+// function check_empty() {
+// if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
+// alert("Fill All Fields !");
+// } else {
+// document.getElementById('form').submit();
+// alert("Form Submitted Successfully...");
+// }
+// }
+// //Function To Display Popup
+// function div_show() {
+// document.getElementById('abc').style.display = "block";
+// }
+// //Function to Hide Popup
+// function div_hide(){
+// document.getElementById('abc').style.display = "none";
+// }
+///////////////code graveyard for todo listItems
+// //updating the list from local storage
+// let itemList = localStorage.getItem('listitem').split(',');
+// //console.log(itemList);
+// ///checking if its the first load of teh page then update the weather value and older values
+// if (counter === 0) {
+//   console.log(itemList);
+//   for (i = 1; i < itemList.length; i++) {
+//     $('#listitem').append(`<li id=${i}>`+ itemList[i] + '</li>');
+//   }
+//     itemList=[];
+//     itemList.push(list[0]);
+//     $('#listitem').append('<li id=0>' + itemList[0] + '</li>');
+// } else {
+//   let temp=itemList.length-1;
+//   console.log(temp);
+//   $('#listitem').append(`<li id=${temp} >` + itemList[itemList.length - 1] + '</li>');
+
+
+
+//localStorage.getItem('listitem'));
+//'<li>' + list[list.length - 1] + '</li>');
+
+//list.push(inputValue);
+//counter++;
+//localStorage.setItem('listitem', list);
+
+//let idOfClicked=$(event1.target).parent().attr('id');
+//console.log($(event1.target).parent().attr('id'));
+// function filterData() {
+//     var data = JSON.parse(localStorage.listitem);
+//     //console.log(data);
+//     var newData = data.filter(function(val){
+//         return (val.length !== idOfClicked && val.YourPropertyName !== listitem);
+//     });
+//     localStorage.listitem = JSON.stringify(newData);
+// }
+// filterData();
+//localStorage.listitem.removeItem($(event1.target).parent().attr('id'));
+//console.log(localStorage);
