@@ -417,7 +417,7 @@ hr {
 #leftid {
   margin: 0;
   width: 48vw;
-  height: 85vw;
+  height: 100vh;
   float: left;
   border-radius: 0;
   border-right: 1px solid black;
