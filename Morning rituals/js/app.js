@@ -281,8 +281,6 @@ const ticTacToeFunction = () => {
   $('.ticTacToeContainer').append($('<div>').addClass('board'));
   let mark = 'X';
   let numberOfClicks = 0;
-
-
   const markingSqr = (event) => {
     // console.log($(event.target));
     if (numberOfClicks < 9) {
