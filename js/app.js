@@ -18,10 +18,11 @@ const homepageFunction = () => {
 const newsAjaxCall = () => {
   //creating container for teh news articles
   // <div class="container">
-  $('header').empty();
+  $('header').remove();
   $('body').prepend($('<header>'));
   $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
   $('.container').empty();
+
   // $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
   $('.container').append($('<h1>').text('NEWS'));
   $('.container').append($('<div>').addClass('content'));
@@ -90,7 +91,7 @@ const newsAjaxCall = () => {
 //******************************************************************//
 
 const weatherAjaxCall = () => {
-  $('header').empty();
+  $('header').remove();
   $('body').prepend($('<header>'));
   $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
   $('.container').empty();
@@ -152,7 +153,7 @@ const todoFunction = () => {
   let counter = 0;
   /////local storage retrieval
   $('#list-items').html(localStorage.getItem('listItems'));
-  $('header').empty();
+  $('header').remove();
   $('body').prepend($('<header>'));
   $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
 
