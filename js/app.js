@@ -1,17 +1,4 @@
 //******************************************************************//
-///////////////////////////HomePage////////////////////////////////////////
-//******************************************************************//
-
-const homepageFunction = () => {
-
-  //$('#wrapdiv').empty();
-
-
-}
-
-
-
-//******************************************************************//
 //////////////////////////////News Ajax /////////////////////////
 //******************************************************************//
 
@@ -173,7 +160,7 @@ const todoFunction = () => {
   $('.todoListContent').append($('<ul>').attr('id', 'list-items'));
   //
   const render = (value) => {
-  $('#list-items').append($('<li>').text(value));
+    $('#list-items').append($('<li>').text(value));
   }
 
   ////if teh weather is cold we are adding msg to get the jacket
@@ -207,21 +194,21 @@ const todoFunction = () => {
     }
     event.preventDefault();
 
-$('li').on('click', (event) => {
-  //console.log(localStorage);
-  //console.log(event.currentTarget);
-  $(event.target).css('text-decoration', 'line-through');
-  //event.stopPropagation();
-  $(event.target).append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
+    $('li').on('click', (event) => {
+      //console.log(localStorage);
+      //console.log(event.currentTarget);
+      $(event.target).css('text-decoration', 'line-through');
+      //event.stopPropagation();
+      $(event.target).append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
 
-  $('.remove-btn').on('click', (event1) => {
-    console.log($(event1.target).parent());
-    $(event1.target).parent().remove();
-    localStorage.setItem('listItems', $('#list-items').html());
-  });
-});
+      $('.remove-btn').on('click', (event1) => {
+        console.log($(event1.target).parent());
+        $(event1.target).parent().remove();
+        localStorage.setItem('listItems', $('#list-items').html());
+      });
+    });
 
-})
+  })
 
 
 }
@@ -286,173 +273,283 @@ const gameFunction = () => {
   generateFaces();
 }
 
-$(() => {
-  let $navbar = $('#myTopnav');
-  let sticky = $navbar.offset().top;
-  $(window).scroll(() => {
-    if ($(window).scrollTop() >= sticky) {
-      //console.log("inside window");
-      $navbar.addClass("sticky")
-    } else {
-      $navbar.removeClass("sticky");
+/////////tic-tac-toe///////////
+
+const ticTacToeFunction = () => {
+    $('.container').empty();
+    $('.container').append($('<div>').addClass('ticTacToeContainer'));
+    $('.ticTacToeContainer').append($('<div>').addClass('board'));
+    let mark = 'X';
+    let numberOfClicks = 0;
+
+
+    const markingSqr = (event) => {
+      // console.log($(event.target));
+      if (numberOfClicks < 9) {
+        if ($(event.target).text() === '') {
+          $(event.target).text(mark).addClass(mark);
+          (mark === 'X') ? mark = 'O': mark = 'X';
+        } else {
+          console.log(mark,$(event.target).text());
+          alert("there is a value")
+        }
+        horizontalCheck();
+        verticalCheck();
+        diagonalCheck();
+        //to ensure there are only 9 clicks per game
+        numberOfClicks++;
+      } else {
+        alert("tie");
+        clearAll();
+      }}
+
+    const clearAll = () => {
+      $('.innerSqr').text('')
+        .removeClass('X')
+        .removeClass('O')
+      numberOfClicks = 0;
     }
-  })
-  function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
+    for (i = 1; i <= 9; i++) {
+      $div = $('<div>').addClass('innerSqr').attr('id', 'id' + i);
+      $('.board').append($div);
+
+    }
+$('.board').on('click', markingSqr);
+    const $id1 = $('#id1');
+    const $id2 = $('#id2');
+    const $id3 = $('#id3');
+    const $id4 = $('#id4');
+    const $id5 = $('#id5');
+    const $id6 = $('#id6');
+    const $id7 = $('#id7');
+    const $id8 = $('#id8');
+    const $id9 = $('#id9');
+
+    const horizontalCheck = () => {
+      if (($id1.hasClass('X') && $id2.hasClass('X') && $id3.hasClass('X')) ||
+        ($id4.hasClass('X') && $id5.hasClass('X') && $id6.hasClass('X')) ||
+        ($id7.hasClass('X') && $id8.hasClass('X') && $id9.hasClass('X'))) {
+        alert("X wins");
+        clearAll();
+      } else if (($id1.hasClass('O') && $id2.hasClass('O') && $id3.hasClass('O')) ||
+        ($id4.hasClass('O') && $id5.hasClass('O') && $id6.hasClass('O')) ||
+        ($id7.hasClass('O') && $id8.hasClass('O') && $id9.hasClass('O'))) {
+        alert("O wins");
+        clearAll();
+      }
+    }
+
+    const verticalCheck = () => {
+      if (($id1.hasClass('X') && $id4.hasClass('X') && $id7.hasClass('X')) ||
+        ($id2.hasClass('X') && $id5.hasClass('X') && $id8.hasClass('X')) ||
+        ($id3.hasClass('X') && $id6.hasClass('X') && $id9.hasClass('X'))) {
+        alert("X wins");
+        clearAll();
+      } else if (($id1.hasClass('O') && $id4.hasClass('O') && $id7.hasClass('O')) ||
+        ($id2.hasClass('O') && $id5.hasClass('O') && $id8.hasClass('O')) ||
+        ($id3.hasClass('O') && $id6.hasClass('O') && $id9.hasClass('O'))) {
+        alert("O wins");
+        clearAll();
+      }
+    }
+
+    const diagonalCheck = () => {
+      if (($id1.hasClass('X') && $id5.hasClass('X') && $id9.hasClass('X')) ||
+        ($id3.hasClass('X') && $id5.hasClass('X') && $id7.hasClass('X'))) {
+        alert("X wins");
+        clearAll();
+      } else if (($id1.hasClass('O') && $id5.hasClass('O') && $id9.hasClass('O')) ||
+        ($id3.hasClass('O') && $id5.hasClass('O') && $id7.hasClass('O'))) {
+        alert("O wins");
+        clearAll();
+      }
+
+    }
+
+
+      ///selecting each square using event listener
+       //$('.board').on('click', markingSqr)
+      //
+      // $('.button').on('click', clearAll)
+
+  //  }
   }
-}
-
-  const imgURLArray = ['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/41.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/45.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/42a.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/46.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/26.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/39.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/54-e1519797270413.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/37.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/36-e1519797518910.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/38-e1519797741104.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/33.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/43-e1519798004175.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/3-1-e1519701451376.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/1-1.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/2-e1519701820341.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/9.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/17-e1519728325574.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/53.jpg',
-    'https://www.spiritbutton.com/wp-content/uploads/2018/02/50.jpg'
-  ]
-  //$('.container').empty();
-  // $('.container').append($('<img>').attr('src','image/morning-coffee.jpeg'))
-  const selectRandomNum = () => {
-    return Math.floor(Math.random() * 21) + 1;
-  }
-  let $wrapdiv = $('<div>');
-  $('.randomImg').append($wrapdiv.attr('id', 'wrapdiv').addClass("wrapper"));
-
-  //$('#wrapdiv').children().remove();
-  for (i = 0; i <= 2; i++) {
-    const $div1 = $('<div>').addClass('selectedImg');
-    console.log(imgURLArray[selectRandomNum()]);
-    $div1.css('background-image', 'url(\'' + imgURLArray[selectRandomNum()] + '\')');
-    $('#wrapdiv').append($div1);
-  }
-
-  // homepageFunction();
-  $('#news').on('click', newsAjaxCall)
-  $('#weather').on('click', weatherAjaxCall)
-  $('#games').on('click', gameFunction)
-  $('#todo').on('click', todoFunction)
-  $('#home').on('click', homepageFunction)
-
-})
-
-//////////welcome to the graveyard
-
-
-//console.log("App.js successfully connected");
-//Calling weather api to check for its values
-//c4a833b10b9fb7fdc0ba57f9b6a5e4a3
-//api.openweathermap.org/data/2.5/weather?zip={zip code}
-//news key: c9b28a91c2114ad2bb5aed577298b412
-//
-// <!-- contact us form structure -->
-// <!-- <!DOCTYPE html>
-// <html>
-// <head>
-// <title>Popup contact form</title>
-// <link href="css/elements.css" rel="stylesheet">
-// <script src="js/my_js.js"></script>
-// </head> -->
-// <!-- Body Starts Here -->
-// <!-- <body id="body" style="overflow:hidden;">
-// <div id="abc"> -->
-// <!-- Popup Div Starts Here -->
-// <!-- <div id="popupContact"> -->
-// <!-- Contact Us Form -->
-// <!-- <form action="#" id="form" method="post" name="form">
-// <img id="close" src="images/3.png" onclick ="div_hide()">
-// <h2>Contact Us</h2>
-// <hr>
-// <input id="name" name="name" placeholder="Name" type="text">
-// <input id="email" name="email" placeholder="Email" type="text">
-// <textarea id="msg" name="message" placeholder="Message"></textarea>
-// <a href="javascript:%20check_empty()" id="submit">Send</a>
-// </form>
-// </div> -->
-// <!-- Popup Div Ends Here -->
-// <!-- </div> -->
-// <!-- Display Popup Button -->
-// <!-- <h1>Click Button To Popup Form Using Javascript</h1>
-// <button id="popup" onclick="div_show()">Popup</button>
-// </body> -->
-// <!-- Body Ends Here -->
-// <!-- </html> -->
-
-
-/////////////////contact us form functions///////////
-// Validating Empty Field
-// function check_empty() {
-// if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
-// alert("Fill All Fields !");
-// } else {
-// document.getElementById('form').submit();
-// alert("Form Submitted Successfully...");
-// }
-// }
-// //Function To Display Popup
-// function div_show() {
-// document.getElementById('abc').style.display = "block";
-// }
-// //Function to Hide Popup
-// function div_hide(){
-// document.getElementById('abc').style.display = "none";
-// }
-///////////////code graveyard for todo listItems
-// //updating the list from local storage
-// let itemList = localStorage.getItem('listitem').split(',');
-// //console.log(itemList);
-// ///checking if its the first load of teh page then update the weather value and older values
-// if (counter === 0) {
-//   console.log(itemList);
-//   for (i = 1; i < itemList.length; i++) {
-//     $('#listitem').append(`<li id=${i}>`+ itemList[i] + '</li>');
-//   }
-//     itemList=[];
-//     itemList.push(list[0]);
-//     $('#listitem').append('<li id=0>' + itemList[0] + '</li>');
-// } else {
-//   let temp=itemList.length-1;
-//   console.log(temp);
-//   $('#listitem').append(`<li id=${temp} >` + itemList[itemList.length - 1] + '</li>');
 
 
 
-//localStorage.getItem('listitem'));
-//'<li>' + list[list.length - 1] + '</li>');
+    ///onload function
+    $(() => {
+      let $navbar = $('#myTopnav');
+      let sticky = $navbar.offset().top;
+      $(window).scroll(() => {
+        if ($(window).scrollTop() >= sticky) {
+          //console.log("inside window");
+          $navbar.addClass("sticky")
+        } else {
+          $navbar.removeClass("sticky");
+        }
+      })
 
-//list.push(inputValue);
-//counter++;
-//localStorage.setItem('listitem', list);
+      ///simply using vanilla javascript for top dropdown naigation
+      const loadDropDown = () => {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
 
-//let idOfClicked=$(event1.target).parent().attr('id');
-//console.log($(event1.target).parent().attr('id'));
-// function filterData() {
-//     var data = JSON.parse(localStorage.listitem);
-//     //console.log(data);
-//     var newData = data.filter(function(val){
-//         return (val.length !== idOfClicked && val.YourPropertyName !== listitem);
-//     });
-//     localStorage.listitem = JSON.stringify(newData);
-// }
-// filterData();
-//localStorage.listitem.removeItem($(event1.target).parent().attr('id'));
-//console.log(localStorage);
+
+      const imgURLArray = ['https://www.spiritbutton.com/wp-content/uploads/2018/03/52-1.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/03/8.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/41.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/45.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/42a.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/46.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/26.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/39.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/54-e1519797270413.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/37.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/36-e1519797518910.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/38-e1519797741104.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/33.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/43-e1519798004175.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/3-1-e1519701451376.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/1-1.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/2-e1519701820341.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/4-1-e1519702191944.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/9.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/17-e1519728325574.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/53.jpg',
+        'https://www.spiritbutton.com/wp-content/uploads/2018/02/50.jpg'
+      ]
+      //$('.container').empty();
+      // $('.container').append($('<img>').attr('src','image/morning-coffee.jpeg'))
+      const selectRandomNum = () => {
+        return Math.floor(Math.random() * 21) + 1;
+      }
+      let $wrapdiv = $('<div>');
+      $('.randomImg').append($wrapdiv.attr('id', 'wrapdiv').addClass("wrapper"));
+
+      //$('#wrapdiv').children().remove();
+      for (i = 0; i <= 2; i++) {
+        const $div1 = $('<div>').addClass('selectedImg');
+        console.log(imgURLArray[selectRandomNum()]);
+        $div1.css('background-image', 'url(\'' + imgURLArray[selectRandomNum()] + '\')');
+        $('#wrapdiv').append($div1);
+      }
+
+      // homepageFunction();
+      $('#news').on('click', newsAjaxCall)
+      $('.dropbtn').on('click', loadDropDown)
+      $('#weather').on('click', weatherAjaxCall)
+      $('#games').on('click', gameFunction)
+      $('#todo').on('click', todoFunction)
+
+      $('#tictactoe').on('click', ticTacToeFunction)
+
+    });
+
+    //////////welcome to the graveyard
+
+
+    //console.log("App.js successfully connected");
+    //Calling weather api to check for its values
+    //c4a833b10b9fb7fdc0ba57f9b6a5e4a3
+    //api.openweathermap.org/data/2.5/weather?zip={zip code}
+    //news key: c9b28a91c2114ad2bb5aed577298b412
+    //
+    // <!-- contact us form structure -->
+    // <!-- <!DOCTYPE html>
+    // <html>
+    // <head>
+    // <title>Popup contact form</title>
+    // <link href="css/elements.css" rel="stylesheet">
+    // <script src="js/my_js.js"></script>
+    // </head> -->
+    // <!-- Body Starts Here -->
+    // <!-- <body id="body" style="overflow:hidden;">
+    // <div id="abc"> -->
+    // <!-- Popup Div Starts Here -->
+    // <!-- <div id="popupContact"> -->
+    // <!-- Contact Us Form -->
+    // <!-- <form action="#" id="form" method="post" name="form">
+    // <img id="close" src="images/3.png" onclick ="div_hide()">
+    // <h2>Contact Us</h2>
+    // <hr>
+    // <input id="name" name="name" placeholder="Name" type="text">
+    // <input id="email" name="email" placeholder="Email" type="text">
+    // <textarea id="msg" name="message" placeholder="Message"></textarea>
+    // <a href="javascript:%20check_empty()" id="submit">Send</a>
+    // </form>
+    // </div> -->
+    // <!-- Popup Div Ends Here -->
+    // <!-- </div> -->
+    // <!-- Display Popup Button -->
+    // <!-- <h1>Click Button To Popup Form Using Javascript</h1>
+    // <button id="popup" onclick="div_show()">Popup</button>
+    // </body> -->
+    // <!-- Body Ends Here -->
+    // <!-- </html> -->
+
+
+    /////////////////contact us form functions///////////
+    // Validating Empty Field
+    // function check_empty() {
+    // if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
+    // alert("Fill All Fields !");
+    // } else {
+    // document.getElementById('form').submit();
+    // alert("Form Submitted Successfully...");
+    // }
+    // }
+    // //Function To Display Popup
+    // function div_show() {
+    // document.getElementById('abc').style.display = "block";
+    // }
+    // //Function to Hide Popup
+    // function div_hide(){
+    // document.getElementById('abc').style.display = "none";
+    // }
+    ///////////////code graveyard for todo listItems
+    // //updating the list from local storage
+    // let itemList = localStorage.getItem('listitem').split(',');
+    // //console.log(itemList);
+    // ///checking if its the first load of teh page then update the weather value and older values
+    // if (counter === 0) {
+    //   console.log(itemList);
+    //   for (i = 1; i < itemList.length; i++) {
+    //     $('#listitem').append(`<li id=${i}>`+ itemList[i] + '</li>');
+    //   }
+    //     itemList=[];
+    //     itemList.push(list[0]);
+    //     $('#listitem').append('<li id=0>' + itemList[0] + '</li>');
+    // } else {
+    //   let temp=itemList.length-1;
+    //   console.log(temp);
+    //   $('#listitem').append(`<li id=${temp} >` + itemList[itemList.length - 1] + '</li>');
+
+
+
+    //localStorage.getItem('listitem'));
+    //'<li>' + list[list.length - 1] + '</li>');
+
+    //list.push(inputValue);
+    //counter++;
+    //localStorage.setItem('listitem', list);
+
+    //let idOfClicked=$(event1.target).parent().attr('id');
+    //console.log($(event1.target).parent().attr('id'));
+    // function filterData() {
+    //     var data = JSON.parse(localStorage.listitem);
+    //     //console.log(data);
+    //     var newData = data.filter(function(val){
+    //         return (val.length !== idOfClicked && val.YourPropertyName !== listitem);
+    //     });
+    //     localStorage.listitem = JSON.stringify(newData);
+    // }
+    // filterData();
+    //localStorage.listitem.removeItem($(event1.target).parent().attr('id'));
+    //console.log(localStorage);
