@@ -165,7 +165,13 @@ header img {
 }
 
 article>p {
-  font-family: 'Comfortaa', cursive;
+  font-family: 'Montserrat', sans-serif;
+  /* font-family: 'Comfortaa', cursive; */
+}
+.hmpage_text_div:first-of-type{
+  display:flex;
+  align-items:center;
+  padding-top: 1vw;
 }
 .hmpage_text_div{
   display:flex;
@@ -175,6 +181,7 @@ article>p {
 .hmpage_text_div>p {
   padding: 1vw;
   text-align: justify;
+  font-family: 'Montserrat', sans-serif;
 }
 
 @media (max-width: 600px) {
