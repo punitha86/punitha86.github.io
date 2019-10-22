@@ -103,7 +103,7 @@ const weatherAjaxCall = () => {
   });
   const weatherAjaxFunction = () => {
     $.ajax({
-      url: `http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.getItem('zip')}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
+      url: `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?zip=${localStorage.getItem('zip')}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
     }).then((data) => {
       ////converting to fahreinheit funtcion
       const convertToFahrenheit = (num) => {
@@ -165,7 +165,7 @@ const todoFunction = () => {
 
   ////if teh weather is cold we are adding msg to get the jacket
   $.ajax({
-    url: `http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.zip}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
+    url: `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.zip}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
   }).then((data) => {
     ////converting to fahreinheit funtcion
     const convertToFahrenheit = (num) => {
