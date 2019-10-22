@@ -227,8 +227,8 @@ const gameFunction = () => {
     $('#rightid').children().remove();
   }
   /////////////////////initial set up field for the smileys
-  $('.container').append($('<h2>').text("SMILEY GAME").addClass('gameElem'));
-  $('.container').append($('<p>').text("Please click on the extra smiley face on the left").addClass('gameElem'));
+  // $('.container').append($('<h2>').text("SMILEY GAME").addClass('gameElem'));
+  // $('.container').append($('<p>').text("Please click on the extra smiley face on the left").addClass('gameElem'));
   $('.container').append($('<div>').addClass('gameContainer'));
   $('.gameContainer').append($('<div>').addClass('leftsideGamediv').attr('id', 'leftid'));
   $('.gameContainer').append($('<div>').addClass('rightsideGamediv').attr('id', 'rightid'));
