@@ -5,7 +5,7 @@
   font-family: Open Sans, Helvetica, Arial, sans-serif;
 }
 
-/* Add a black background color to the top navigation */
+/* top navigation */
 .topnav {
   display: flex;
   flex-direction: row;
@@ -14,7 +14,7 @@
   justify-content: space-between;
 }
 
-/* Style the links inside the navigation bar */
+/* styling the links inside the navigation bar */
 .topnav a {
   display: inline-flex;
   color: #f2f2f2;
@@ -24,20 +24,13 @@
   font-size: 17px;
 }
 
-/* Add an active class to highlight the current page */
-.topnav a.active {
-  background-color: #d3d3d3;
-  color: white;
-}
-
-/****************/
 /* Dropdown container - needed to position the dropdown content */
 .dropdown {
   float: left;
   overflow: hidden;
 }
 
-/* Style the dropdown button to fit inside the topnav */
+/* styling the dropdown button to fit inside the topnav */
 .dropdown .dropbtn {
   font-size: 17px;
   border: none;
@@ -165,8 +158,11 @@ header img {
 }
 
 article>p {
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: lighter;
+  padding-left: 7vw;
+  padding-right: 7vw;
+  text-align: center;
+  /* font-family: 'Ubuntu', sans-serif; */
+  /* font-weight: lighter; */
   /* font-family: 'Montserrat', sans-serif; */
   /* font-family: 'Comfortaa', cursive; */
 }
@@ -181,7 +177,7 @@ article>p {
   padding-top: 10vw;
 }
 .hmpage_text_div>p {
-  padding: 1vw;
+  padding: 1vw 5vh;
   text-align: justify;
   font-family: 'Ubuntu', sans-serif;
 }
@@ -213,7 +209,7 @@ article>p {
   height: 30vw;
   background-repeat: no-repeat;
   background-size: contain;
-  align-items: center;
+  background-position: center;
 }
 
 .wrapper {
