@@ -19,7 +19,7 @@ Link to the webpage: [https://punitha86.github.io/Morning%20rituals/](https://pu
 * Getting data from the news api and rendering it as a image carousel that autoplays till we click on a news to read it.API used:![News] (https://newsapi.org/)
 ![todo](Markdown_images/newsCarousel.png)
 
-* Adding a todo Item automatically if the weather is cold with a locally stored zipcode variable
+* Adding a todo Item automatically if the weather is cold with a locally stored zipcode variable and some todo items in local storage
 ![todo](Markdown_images/Weather_based_todo.png)
 
 

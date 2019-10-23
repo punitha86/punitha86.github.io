@@ -58,7 +58,7 @@ const newsAjaxCall = () => {
       `<img class='newsimg'>`
     }
       appendingString += `<p class='newsPara'> ${x.title}</p>`;
-      appendingString += `<article class='description'> ${x.description} </article> News Link to the site:<br><a href="${x.url}" target="_blank">${x.url}</a></div>`;
+      appendingString += `<article class='description'> ${x.description} </article> <br><a href="${x.url}" target="_blank">Link to the news site</a></div>`;
 
       $('.news-carousel-images').append(appendingString);
       $('.description').hide();
@@ -166,8 +166,7 @@ const todoFunction = () => {
   let list = [];
   ///counter value to check if its the first render of the page;
   let counter = 0;
-  /////local storage retrieval
-  $('#list-items').html(localStorage.getItem('listItems'));
+
   $('header').remove();
   $('body').prepend($('<header>'));
   $('header').append($('<img src="image/morning-rituals-cover-1-1024x317.jpg" alt="morning rituals">'));
@@ -178,6 +177,8 @@ const todoFunction = () => {
   //adding a form to the body
   $('.container').append($('<div>').addClass('todoContent'));
   //adding the input to the form
+  /////local storage retrieval
+  $('#list-items').html(localStorage.getItem('listItems'));
   let appendingTodoString = '<form><input type="text" id="input-box"/>';
   //adding submit button to the form
   appendingTodoString += '<input type="submit" id="submit-btn"/>';
@@ -186,11 +187,16 @@ const todoFunction = () => {
   $('.todoContent').append($(appendingTodoString));
   $('.todoContent').append($('<div>').addClass('todoListContent'));
   $('.todoListContent').append($('<ul>').attr('id', 'list-items'));
-  //
-  const render = (value) => {
-    $('#list-items').append($('<li>').text(value));
-  }
-
+//console.log(localStorage.getItem('listItems'));
+  // const render = (value) => {
+  //   if(typeof value=='jquery'){
+  //     $('#list-items').empty();
+  //     $('#list-items').html(localStorage.getItem('listItems'));
+  //   }else
+  //   $('#list-items').append($('<li>').text(value));
+  // }
+//render($('#list-items').html(localStorage.getItem('listItems')));
+  let temp='';
   ////if teh weather is cold we are adding msg to get the jacket
   $.ajax({
     url: `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.zip}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
@@ -201,25 +207,37 @@ const todoFunction = () => {
       return num;
     }
     ///If temperature is less than 60F add item to do list
+
     if (convertToFahrenheit(data.main.temp_min) < 60.0) {
-      //$('#list-items').push('Better pack ur jacket weather is cold today');
-      render('Better pack ur jacket weather is cold today');
+      temp+="<li><span class='list'>"+'Better pack ur jacket weather is cold today'+ "</span></li>";
+      // $('#list-items').append("<li><span class='list'>"+'Better pack ur jacket weather is cold today'+ "</span></li>");
+      // render('Better pack ur jacket weather is cold today');
     }
 
     //console.log(data.main.temp);
   }, (error) => {
     console.log(error);
   })
+  const render=() => {
+    $('#list-items').html(localStorage.getItem('listItems'));
+  }
 
-
+render();
   $('form').on('submit', (event) => {
     const inputValue = $('#input-box').val();
+
+
     if (inputValue) {
-      $('#list-items').append("<li><span class='list'>" + inputValue + "</span></li>");
-      // $('#list-items').append($('<li>').text(inputValue));
-      localStorage.setItem('listItems', $('#list-items').html());
+      //$('#list-items').append("<li><span class='list'>" + inputValue + "</span></li>");
+      //// $('#list-items').append($('<li>').text(inputValue));
+      //localStorage.setItem('listItems', $('#list-items').html());
+
+      temp+="<li><span class='list'>" + inputValue + "</span></li>"
+      localStorage.setItem('listItems',temp);
+        render();
       $(event.currentTarget).trigger('reset');
-    }
+
+    //}
     event.preventDefault();
 
     $('li').on('click', (event) => {
@@ -227,15 +245,18 @@ const todoFunction = () => {
       //console.log(event.currentTarget);
       $(event.target).css('text-decoration', 'line-through');
       //event.stopPropagation();
-      $(event.target).append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
-
+      console.log($(event.target));
+      $(event.target).parent().append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
+console.log(localStorage);
       $('.remove-btn').on('click', (event1) => {
-        //console.log($(event1.target).parent());
+
         $(event1.target).parent().remove();
         localStorage.setItem('listItems', $('#list-items').html());
+        console.log(localStorage.listItems)
+        console.log(localStorage.listItems[1]);
       });
     });
-
+}
   })
 
 
