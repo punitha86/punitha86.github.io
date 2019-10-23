@@ -141,7 +141,9 @@ header {
 header img {
   width: 100vw;
 }
-
+#introPara{
+  margin-top: 7vw;
+}
 .container>p {
   margin: 2vw;
 }
@@ -168,7 +170,7 @@ article>p {
 .hmpage_text_div:first-of-type{
   display:flex;
   align-items:center;
-  padding-top: 1vw;
+  padding-top: 0;
 }
 .hmpage_text_div{
   display:flex;

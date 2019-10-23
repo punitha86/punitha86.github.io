@@ -51,3 +51,4 @@ Link to the webpage: [https://punitha86.github.io/Morning%20rituals/](https://pu
 1. Local storage in the todo list item is not functioning well.
 2. UI design can be better and more responsive.
 3. Instead of an alert could have used modal for game reactions.
+4. Adding Stock Market trend, local traffic info, favourite music channnel plugin
