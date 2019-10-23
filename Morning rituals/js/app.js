@@ -40,7 +40,7 @@ const newsAjaxCall = () => {
   $('.container').append($('<h1>').text('NEWS'));
   $('.container').append($('<div>').addClass('content'));
   $('.content').append($('<div>').addClass('news-carousel-button previous'));
-   $('.news-carousel-button previous').append($('<span></span>'))
+  $('.news-carousel-button previous').append($('<span></span>'))
   $('.content').append($('<div>').addClass('news-carousel-images'));
   $('.content').append($('<div>').addClass('news-carousel-button next'));
   $('.news-carousel-button next').append($('<span></span>'))
@@ -52,11 +52,11 @@ const newsAjaxCall = () => {
     for (x of data.articles) {
       let appendingString = `<div class="newsDiv">`;
       ///when api is not giving any image with the news
-      if(x.urlToImage!=null){
-      appendingString += `<img src=${x.urlToImage} class='newsimg' style="width:100%;height=100%">`;
-    }else{
-      `<img class='newsimg'>`
-    }
+      if (x.urlToImage != null) {
+        appendingString += `<img src=${x.urlToImage} class='newsimg' style="width:100%;height=100%">`;
+      } else {
+        `<img class='newsimg'>`
+      }
       appendingString += `<p class='newsPara'> ${x.title}</p>`;
       appendingString += `<article class='description'> ${x.description} </article> <br><a href="${x.url}" target="_blank">Link to the news site</a></div>`;
 
@@ -154,7 +154,7 @@ const weatherAjaxCall = () => {
       console.log(error);
     })
   }
-$('.container').append($('<footer>').text('Powered by https://openweathermap.org/api').addClass('weatherFooter'));
+  $('.container').append($('<footer>').text('Powered by https://openweathermap.org/api').addClass('weatherFooter'));
 
   weatherAjaxFunction();
 
@@ -187,7 +187,7 @@ const todoFunction = () => {
   $('.todoContent').append($(appendingTodoString));
   $('.todoContent').append($('<div>').addClass('todoListContent'));
   $('.todoListContent').append($('<ul>').attr('id', 'list-items'));
-//console.log(localStorage.getItem('listItems'));
+  //console.log(localStorage.getItem('listItems'));
   // const render = (value) => {
   //   if(typeof value=='jquery'){
   //     $('#list-items').empty();
@@ -195,8 +195,8 @@ const todoFunction = () => {
   //   }else
   //   $('#list-items').append($('<li>').text(value));
   // }
-//render($('#list-items').html(localStorage.getItem('listItems')));
-  let temp='';
+  //render($('#list-items').html(localStorage.getItem('listItems')));
+  let temp = '';
   ////if teh weather is cold we are adding msg to get the jacket
   $.ajax({
     url: `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?zip=${localStorage.zip}&appid=c4a833b10b9fb7fdc0ba57f9b6a5e4a3`
@@ -209,7 +209,7 @@ const todoFunction = () => {
     ///If temperature is less than 60F add item to do list
 
     if (convertToFahrenheit(data.main.temp_min) < 60.0) {
-      temp+="<li><span class='list'>"+'Better pack ur jacket weather is cold today'+ "</span></li>";
+      temp += "<li><span class='list'>" + 'Better pack ur jacket weather is cold today' + "</span></li>";
       // $('#list-items').append("<li><span class='list'>"+'Better pack ur jacket weather is cold today'+ "</span></li>");
       // render('Better pack ur jacket weather is cold today');
     }
@@ -218,45 +218,43 @@ const todoFunction = () => {
   }, (error) => {
     console.log(error);
   })
-  const render=() => {
+  const render = () => {
     $('#list-items').html(localStorage.getItem('listItems'));
   }
 
-render();
+  render();
   $('form').on('submit', (event) => {
     const inputValue = $('#input-box').val();
-
-
     if (inputValue) {
       //$('#list-items').append("<li><span class='list'>" + inputValue + "</span></li>");
       //// $('#list-items').append($('<li>').text(inputValue));
       //localStorage.setItem('listItems', $('#list-items').html());
 
-      temp+="<li><span class='list'>" + inputValue + "</span></li>"
-      localStorage.setItem('listItems',temp);
-        render();
+      temp += "<li><span class='list'>" + inputValue + "</span></li>"
+      localStorage.setItem('listItems', temp);
+      render();
       $(event.currentTarget).trigger('reset');
 
-    //}
-    event.preventDefault();
+      //}
+      event.preventDefault();
 
-    $('li').on('click', (event) => {
-      //console.log(localStorage);
-      //console.log(event.currentTarget);
-      $(event.target).css('text-decoration', 'line-through');
-      //event.stopPropagation();
-      console.log($(event.target));
-      $(event.target).parent().append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
-console.log(localStorage);
-      $('.remove-btn').on('click', (event1) => {
+      $('li').on('click', (event) => {
+        //console.log(localStorage);
+        //console.log(event.currentTarget);
+        $(event.target).css('text-decoration', 'line-through');
+        //event.stopPropagation();
+        //console.log($(event.target));
+        $(event.target).parent().append($('<button>').text("REMOVE").addClass("remove-btn").css('text-decoration', 'none'));
+        //console.log(localStorage);
+        $('.remove-btn').on('click', (event1) => {
 
-        $(event1.target).parent().remove();
-        localStorage.setItem('listItems', $('#list-items').html());
-        console.log(localStorage.listItems)
-        console.log(localStorage.listItems[1]);
+          $(event1.target).parent().remove();
+          localStorage.setItem('listItems', $('#list-items').html());
+          //console.log(localStorage.listItems)
+          //console.log(localStorage.listItems[1]);
+        });
       });
-    });
-}
+    }
   })
 
 
@@ -440,8 +438,8 @@ $(() => {
 
   ///simply using function for top dropdown naigation
   const loadDropDown = () => {
-    let $myTopNav= $("#myTopnav");
-    if($myTopNav.hasClass('topnav')){
+    let $myTopNav = $("#myTopnav");
+    if ($myTopNav.hasClass('topnav')) {
       $myTopNav.addClass('responsive');
     }
   }
