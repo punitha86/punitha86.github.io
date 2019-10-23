@@ -436,13 +436,6 @@ $(() => {
     }
   })
 
-  ///simply using function for top dropdown naigation
-  const loadDropDown = () => {
-    let $myTopNav = $("#myTopnav");
-    if ($myTopNav.hasClass('topnav')) {
-      $myTopNav.addClass('responsive');
-    }
-  }
 
 
 
@@ -460,7 +453,6 @@ $(() => {
     $('#wrapdiv').append($div1);
   }
 
-  $('.dropbtn').on('click', loadDropDown)
 
   $('#news').on('click', newsAjaxCall)
   $('#weather').on('click', weatherAjaxCall)
